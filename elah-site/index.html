@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elah: intelligence you can hold</title>
+<meta name="description" content="Elah is building a personal AI that lives with you, not in a data center. Private by design. Yours from the first word.">
+<meta property="og:title" content="Elah: intelligence you can hold">
+<meta property="og:description" content="A personal AI that lives with you, not in a data center. Request early access.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1.3 -1.3 2.8 2.6'%3E%3Cpath d='M-.95 0H.95A.95 .95 0 1 0 .52 .79' fill='none' stroke='%23fff' stroke-width='.22' stroke-linecap='round'/%3E%3Ccircle cx='1.1' cy='.4' r='.15' fill='%23E5102A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #000000;
+  --white: #FFFFFF;
+  --red: #E5102A;
+  --ash: #8E8E8E;
+  --dim: #3B3B3B;
+  --line: #242424;
+  --display: "Unbounded", "Helvetica Neue", Arial, sans-serif;
+  --text: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --pad: clamp(20px, 5vw, 72px);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--black); color: var(--white);
+  font: 400 1.0625rem/1.6 var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 300; margin: 0; }
+p { margin: 0; }
+
+/* nav */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px var(--pad);
+  background: linear-gradient(#000 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0));
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand svg { width: 30px; height: 28px; }
+.brand span { font-family: var(--display); font-weight: 500; font-size: 1.25rem; letter-spacing: -0.02em; }
+.nav-links { display: flex; align-items: center; gap: 28px; font-size: 0.95rem; }
+.nav-links a { text-decoration: none; color: var(--ash); transition: color .2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-links .pill { color: var(--white); }
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--red); border-radius: 999px;
+  padding: 10px 20px; text-decoration: none; font: 500 0.95rem var(--text);
+  background: transparent; color: var(--white); cursor: pointer;
+  transition: background .2s, box-shadow .2s;
+}
+.pill:hover { background: var(--red); box-shadow: 0 0 32px rgba(229,16,42,0.45); }
+.pill.solid { background: var(--red); }
+.pill.solid:hover { background: #ff2a43; }
+.pill.ghost { border-color: var(--dim); }
+.pill.ghost:hover { background: transparent; border-color: var(--white); box-shadow: none; }
+
+/* hero */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; }
+#orb { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero-copy {
+  position: absolute; left: var(--pad); bottom: clamp(48px, 10vh, 110px);
+  max-width: 34rem; z-index: 2;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 1.1s ease, transform 1.1s ease;
+}
+.hero.ready .hero-copy { opacity: 1; transform: none; }
+.hero h1 { font-size: clamp(2.6rem, 6.6vw, 6rem); line-height: 1.02; letter-spacing: -0.035em; }
+.hero-copy p { margin-top: 22px; color: #C9C9C9; font-size: 1.15rem; max-width: 27rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero-note {
+  position: absolute; right: var(--pad); bottom: clamp(48px, 10vh, 110px); z-index: 2;
+  color: var(--ash); font-size: 0.9rem; text-align: right;
+  opacity: 0; transition: opacity 1.4s ease .5s;
+}
+.hero.ready .hero-note { opacity: 1; }
+
+/* manifesto */
+.manifesto { padding: 26vh var(--pad) 22vh; max-width: 1180px; }
+.manifesto p {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(1.7rem, 4.2vw, 3.5rem); line-height: 1.15; letter-spacing: -0.03em;
+  color: var(--dim); transition: color .9s ease;
+  margin-bottom: 0.6em; max-width: 22ch;
+}
+.manifesto p.lit { color: var(--white); }
+.manifesto p.turn.lit { color: var(--red); }
+
+/* node */
+.section { padding: 14vh var(--pad); border-top: 1px solid var(--line); }
+.node-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: end; }
+.section h2 { font-size: clamp(2.2rem, 5vw, 4.2rem); letter-spacing: -0.035em; line-height: 1.04; }
+.lede { color: #C9C9C9; font-size: 1.2rem; max-width: 34rem; }
+.promises { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 12vh; }
+.promise { border-top: 1px solid var(--line); padding-top: 28px; position: relative; }
+.promise::before { content: ""; position: absolute; left: 0; top: -1px; width: 44px; height: 1px; background: var(--red); }
+.promise h3 { font-size: 1.3rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 14px; }
+.promise p { color: var(--ash); max-width: 30ch; }
+.closing { margin-top: 12vh; font-family: var(--display); font-weight: 300; font-size: clamp(1.3rem, 2.6vw, 2rem); letter-spacing: -0.02em; max-width: 30ch; }
+
+/* quest */
+.quest { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.quest .lede { margin-top: 22px; }
+.quest-note { margin-top: 18px; color: var(--ash); max-width: 32rem; }
+.cipher-box { border: 1px solid var(--line); border-radius: 18px; padding: clamp(22px, 4vw, 44px); background: radial-gradient(120% 90% at 100% 0%, rgba(229,16,42,0.10), transparent 60%); }
+.cipher {
+  font-family: var(--display); font-weight: 400; font-size: clamp(1.3rem, 3.4vw, 2.4rem);
+  letter-spacing: 0.08em; line-height: 1.35; word-spacing: 0.3em; color: var(--white);
+}
+.cipher span { display: inline-block; opacity: 0.25; transition: opacity .4s; }
+.cipher.show span { opacity: 1; }
+.clue { margin-top: 22px; color: #C9C9C9; }
+.quest-form { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.quest-form input { flex: 1 1 220px; }
+.quest-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+.linkish { background: none; border: 0; color: var(--ash); font: inherit; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+.linkish:hover { color: var(--white); }
+.msg { min-height: 1.6em; color: var(--ash); }
+.msg.ok { color: var(--white); }
+.msg.err { color: #ff6b7c; }
+
+/* build */
+.build { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: end; }
+.build ul { list-style: none; padding: 0; margin: 26px 0 0; color: #C9C9C9; }
+.build li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+
+/* join */
+.join { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 96px); }
+.join .lede { margin-top: 22px; }
+form.signup { display: grid; gap: 18px; }
+fieldset { border: 0; padding: 0; margin: 0; }
+legend, label { font-size: 0.95rem; color: var(--ash); display: block; margin-bottom: 8px; }
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.choice input { position: absolute; opacity: 0; pointer-events: none; }
+.choice span {
+  display: block; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+  cursor: pointer; transition: border-color .2s, background .2s; color: #D8D8D8;
+}
+.choice span b { display: block; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+.choice span small { color: var(--ash); font-size: 0.88rem; }
+.choice input:checked + span { border-color: var(--red); background: rgba(229,16,42,0.08); }
+.choice input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 3px; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+input[type=text], input[type=email], textarea {
+  width: 100%; background: #0a0a0a; border: 1px solid var(--line); border-radius: 10px;
+  color: var(--white); font: inherit; padding: 13px 15px; transition: border-color .2s;
+}
+input:focus, textarea:focus { border-color: var(--ash); outline: none; }
+textarea { min-height: 96px; resize: vertical; }
+.hidden { display: none; }
+.solved-badge { display: none; color: var(--white); font-size: 0.95rem; }
+.solved-badge.on { display: block; }
+.solved-badge::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-right: 8px; vertical-align: middle; }
+
+footer { padding: 10vh var(--pad) 48px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; color: var(--ash); font-size: 0.92rem; }
+footer p { max-width: 40ch; }
+
+@media (max-width: 900px) {
+  .nav-links a:not(.pill) { display: none; }
+  .hero-copy { bottom: 64px; right: var(--pad); }
+  .hero-note { display: none; }
+  .node-head, .quest, .build, .join { grid-template-columns: minmax(0, 1fr); }
+  .promises { grid-template-columns: minmax(0, 1fr); margin-top: 8vh; }
+}
+@media (max-width: 560px) {
+  .choices, .row { grid-template-columns: minmax(0, 1fr); }
+  .pill { padding: 10px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-copy, .hero-note, .manifesto p { transition: none; }
+}
+
+/* ---------- tabs ---------- */
+.view { display: none; }
+.view.active { display: block; animation: viewIn .55s ease; }
+@keyframes viewIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.view > .section:first-child { border-top: 0; padding-top: calc(12vh + 72px); }
+.nav-links a[aria-current="page"] { color: var(--white); }
+.nav-links a:not(.pill)[aria-current="page"]::after { content: ""; display: block; height: 1px; background: var(--red); margin-top: 4px; }
+.nav-links .pill[aria-current="page"] { background: var(--red); }
+
+/* ---------- home: a day with Node ---------- */
+.day { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.day .lede { margin-top: 22px; }
+.times { display: flex; gap: 8px; margin-top: 32px; flex-wrap: wrap; }
+.times button {
+  background: transparent; color: var(--ash); border: 1px solid var(--line); border-radius: 999px;
+  padding: 10px 18px; font: 500 0.95rem var(--text); cursor: pointer; transition: color .2s, border-color .2s;
+}
+.times button:hover { color: var(--white); }
+.times button[aria-selected="true"] { color: var(--white); border-color: var(--red); }
+.screen {
+  border: 1px solid var(--line); border-radius: 24px; padding: clamp(24px, 4vw, 44px);
+  min-height: 330px; display: grid; grid-template-rows: auto 1fr auto; gap: 26px;
+  background: radial-gradient(90% 80% at 0% 100%, rgba(229,16,42,0.12), transparent 65%), #050505;
+}
+.screen-top { display: flex; align-items: center; justify-content: space-between; color: var(--ash); font-size: 0.92rem; }
+.speaking { display: flex; align-items: center; gap: 10px; }
+.pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 0 rgba(229,16,42,0.6); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(229,16,42,0.55); } 70% { box-shadow: 0 0 0 14px rgba(229,16,42,0); } 100% { box-shadow: 0 0 0 0 rgba(229,16,42,0); } }
+.say { font-family: var(--display); font-weight: 300; font-size: clamp(1.25rem, 2.4vw, 1.9rem); line-height: 1.3; letter-spacing: -0.02em; min-height: 5.2em; }
+.say .caret { display: inline-block; width: 2px; height: 1em; background: var(--red); vertical-align: -0.12em; margin-left: 3px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.screen-foot { color: var(--ash); font-size: 0.95rem; border-top: 1px solid var(--line); padding-top: 18px; }
+
+/* ---------- home: cloud vs Node ---------- */
+.versus { margin-top: 8vh; border-top: 1px solid var(--line); }
+.vs-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr); gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.vs-row.head { color: var(--ash); font-size: 0.95rem; padding: 16px 0; }
+.vs-row.head span:last-child { color: var(--white); }
+.vs-row b { font-weight: 500; color: #C9C9C9; }
+.vs-row span:nth-child(2) { color: var(--ash); }
+.vs-row span:last-child { color: var(--white); }
+.vs-row.head span:last-child::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-right: 8px; vertical-align: middle; }
+
+/* ---------- home: who it's for ---------- */
+.people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 8vh; border-top: 1px solid var(--line); }
+.person { padding: 32px 28px 8px 0; }
+.person + .person { padding-left: 28px; border-left: 1px solid var(--line); }
+.person h3 { font-size: 1.3rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 12px; }
+.person p { color: var(--ash); max-width: 32ch; }
+.person p.quote { color: var(--white); margin-top: 18px; font-size: 1.02rem; }
+
+/* ---------- home: explore links ---------- */
+.explore { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 8vh; }
+.door {
+  display: grid; gap: 10px; align-content: space-between; min-height: 210px;
+  border: 1px solid var(--line); border-radius: 20px; padding: 28px; text-decoration: none;
+  transition: border-color .25s, background .25s;
+}
+.door:hover { border-color: var(--red); background: rgba(229,16,42,0.06); }
+.door h3 { font-size: 1.5rem; font-weight: 400; letter-spacing: -0.02em; }
+.door p { color: var(--ash); }
+.door .go { color: var(--white); font-weight: 500; }
+
+.cta-band { text-align: center; padding: 18vh var(--pad); border-top: 1px solid var(--line); background: radial-gradient(60% 70% at 50% 100%, rgba(229,16,42,0.16), transparent 70%); }
+.cta-band h2 { font-size: clamp(2.2rem, 5.4vw, 4.6rem); letter-spacing: -0.035em; line-height: 1.04; max-width: 16ch; margin: 0 auto; }
+.cta-band p { color: #C9C9C9; margin: 22px auto 0; max-width: 34rem; font-size: 1.15rem; }
+.cta-band .actions { justify-content: center; }
+
+/* ---------- node: capabilities ---------- */
+.caps { margin-top: 10vh; border-top: 1px solid var(--line); }
+.cap { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: 24px; padding: 30px 0; border-bottom: 1px solid var(--line); }
+.cap h3 { font-size: clamp(1.4rem, 2.6vw, 2.1rem); font-weight: 300; letter-spacing: -0.03em; }
+.cap p { color: #C9C9C9; max-width: 46ch; }
+.cap .soon { display: block; color: var(--ash); font-size: 0.92rem; margin-top: 8px; }
+
+/* ---------- careers ---------- */
+.roles { margin-top: 8vh; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+.roles h3 { font-size: 1.25rem; font-weight: 400; letter-spacing: -0.02em; margin-bottom: 14px; }
+.roles ul { margin: 0; padding-left: 1.1em; color: #C9C9C9; display: grid; gap: 8px; }
+.steps { list-style: none; padding: 0; margin: 8vh 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; counter-reset: s; }
+.steps li { border-top: 1px solid var(--line); padding-top: 22px; counter-increment: s; color: #C9C9C9; }
+.steps li::before { content: counter(s); display: block; font-family: var(--display); font-size: 1.6rem; color: var(--red); margin-bottom: 10px; font-weight: 300; }
+
+@media (max-width: 900px) {
+  .nav { flex-wrap: wrap; row-gap: 10px; }
+  .nav-links { width: 100%; overflow-x: auto; gap: 16px; font-size: 0.92rem; padding-bottom: 4px; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a:not(.pill) { display: inline-block; white-space: nowrap; }
+  .nav-links .pill { padding: 6px 12px; font-size: 0.88rem; white-space: nowrap; margin-left: auto; }
+  .view > .section:first-child { padding-top: calc(8vh + 110px); }
+  .day, .cap, .roles { grid-template-columns: minmax(0, 1fr); }
+  .people, .explore, .steps { grid-template-columns: minmax(0, 1fr); }
+  .person + .person { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+  .vs-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .vs-row b { grid-column: 1 / -1; }
+  .vs-row.head span:first-child { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .view.active { animation: none; }
+  .pulse, .say .caret { animation: none; }
+}
+
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="#home" aria-label="Elah home">
+    <svg viewBox="-1.3 -1.3 2.8 2.6" aria-hidden="true"><path d="M-.95 0H.95A.95 .95 0 1 0 .52 .79" fill="none" stroke="#fff" stroke-width=".2" stroke-linecap="round"/><circle cx="1.1" cy=".4" r=".15" fill="#E5102A"/></svg>
+    <span>elah</span>
+  </a>
+  <div class="nav-links">
+    <a href="#home" data-tab="home">Home</a>
+    <a href="#node" data-tab="node">Node</a>
+    <a href="#quest" data-tab="quest">Quest</a>
+    <a href="#careers" data-tab="careers">Careers</a>
+    <a class="pill" href="#access" data-tab="access">Early access</a>
+  </div>
+</nav>
+
+<main>
+<!-- ================= HOME ================= -->
+<div class="view" id="v-home" data-title="Elah: intelligence you can hold">
+  <header class="hero">
+    <canvas id="orb" aria-hidden="true"></canvas>
+    <div class="hero-copy">
+      <h1>Intelligence you can hold.</h1>
+      <p>Elah is building a personal AI that lives with you, not in a data center. Private by design. Yours from the first word.</p>
+      <div class="actions">
+        <a class="pill solid" href="#access">Get early access</a>
+        <a class="pill ghost" href="#quest">Try the quest</a>
+      </div>
+    </div>
+    <p class="hero-note">In stealth.<br>Arriving soon.</p>
+  </header>
+
+  <section class="manifesto" aria-label="Why Elah">
+    <p>Today, the smartest machines on earth live in someone else's building.</p>
+    <p>You rent them by the word.</p>
+    <p>They forget you when the tab closes.</p>
+    <p class="turn">Elah is building the other kind.</p>
+    <p>Small enough for your desk. Yours from the first word.</p>
+  </section>
+
+  <section class="section">
+    <div class="day">
+      <div>
+        <h2>A day with Node.</h2>
+        <p class="lede">Most AI waits for you to type. Node already knows what your day looks like, and speaks up when it matters.</p>
+        <div class="times" role="tablist" aria-label="Time of day">
+          <button role="tab" aria-selected="true" data-t="0">Morning</button>
+          <button role="tab" aria-selected="false" data-t="1">Afternoon</button>
+          <button role="tab" aria-selected="false" data-t="2">Night</button>
+        </div>
+      </div>
+      <div class="screen" aria-live="polite">
+        <div class="screen-top"><span class="speaking"><span class="pulse"></span>Node</span><span id="clock">7:40 AM</span></div>
+        <p class="say" id="say"></p>
+        <p class="screen-foot" id="sayFoot"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Not another subscription.</h2>
+    <div class="versus" role="table" aria-label="Cloud AI compared with Node">
+      <div class="vs-row head" role="row"><span role="columnheader"></span><span role="columnheader">Cloud AI</span><span role="columnheader">Node</span></div>
+      <div class="vs-row" role="row"><b role="rowheader">Where it lives</b><span role="cell">Someone else's data center</span><span role="cell">On your desk</span></div>
+      <div class="vs-row" role="row"><b role="rowheader">Your data</b><span role="cell">Sent away, under their policies</span><span role="cell">Stays on your device</span></div>
+      <div class="vs-row" role="row"><b role="rowheader">How you pay</b><span role="cell">Per word, per month, with limits</span><span role="cell">Once. No meter.</span></div>
+      <div class="vs-row" role="row"><b role="rowheader">Memory</b><span role="cell">Starts over, or remembers a little</span><span role="cell">Learns you, and keeps learning</span></div>
+      <div class="vs-row" role="row"><b role="rowheader">When the internet drops</b><span role="cell">It stops</span><span role="cell">It keeps working</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Made for people who make things.</h2>
+    <div class="people">
+      <div class="person">
+        <h3>Creators</h3>
+        <p>Talk through an idea and watch it become images, video and 3D, with you directing every step.</p>
+        <p class="quote">Your style stays yours. It never trains anyone else's model.</p>
+      </div>
+      <div class="person">
+        <h3>Builders</h3>
+        <p>Projects too large for a chat window. Node holds the whole thing in mind and works on it offline.</p>
+        <p class="quote">Your code never leaves the room.</p>
+      </div>
+      <div class="person">
+        <h3>Business owners</h3>
+        <p>A team of AI helpers that handle the busywork in the background while you run the business.</p>
+        <p class="quote">Your numbers stay in your office.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Go further.</h2>
+    <div class="explore">
+      <a class="door" href="#node"><h3>Meet Node</h3><p>What it is, and what it will do for you.</p><span class="go">See Node</span></a>
+      <a class="door" href="#quest"><h3>The quest</h3><p>Solve the cipher and move to the front of the list.</p><span class="go">Take the quest</span></a>
+      <a class="door" href="#careers"><h3>Build it with us</h3><p>We're hiring a founding system architect.</p><span class="go">See the role</span></a>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>The first Nodes go to a small group.</h2>
+    <p>Buyers, businesses and investors: tell us who you are and you'll hear from us first.</p>
+    <div class="actions"><a class="pill solid" href="#access">Get early access</a></div>
+  </section>
+</div>
+
+<!-- ================= NODE ================= -->
+<div class="view" id="v-node" data-title="Node | Elah">
+  <section class="section">
+    <div class="node-head">
+      <h2>Meet Node.</h2>
+      <p class="lede">Node is the device. Inside it lives an AI that knows your work, your voice and your ideas, and keeps them to itself.</p>
+    </div>
+    <div class="promises">
+      <div class="promise"><h3>It's yours</h3><p>It runs on a device in your home or office. Your conversations, files and memories stay there.</p></div>
+      <div class="promise"><h3>It never runs out</h3><p>No tokens, no credits, no meter. Use it all day. It doesn't charge you by the word.</p></div>
+      <div class="promise"><h3>It meets you halfway</h3><p>It speaks up when it has something worth saying, and makes images, video and 3D with you, not just for you.</p></div>
+    </div>
+
+    <div class="caps">
+      <div class="cap"><h3>Talk</h3><p>Speak to it like a person. It answers out loud, follows the thread, and picks up where you left off yesterday.</p></div>
+      <div class="cap"><h3>Remember</h3><p>It remembers what matters to you, and you can see and edit everything it knows.</p></div>
+      <div class="cap"><h3>Create</h3><p>Images, video and 3D from a conversation. You stay in the director's chair.</p></div>
+      <div class="cap"><h3>Work</h3><p>Hand off the busywork. A small team of AI helpers runs it in the background and reports back.</p></div>
+      <div class="cap"><h3>For teams</h3><p>A private AI for your office, on hardware you own. We're opening a small number of business pilots.<span class="soon">Interested? Choose "A business" on the early-access form.</span></p></div>
+    </div>
+    <p class="closing">And every night, it gets a little better at being yours.</p>
+    <div class="actions" style="margin-top:32px"><a class="pill solid" href="#access">Get early access</a></div>
+  </section>
+</div>
+
+<!-- ================= QUEST ================= -->
+<div class="view" id="v-quest" data-title="The quest | Elah">
+  <section class="section">
+    <div class="quest">
+      <div>
+        <h2>The quest.</h2>
+        <p class="lede">The people we build for like a puzzle. Solve this one and you move to the front of the early-access list.</p>
+        <p class="quest-note">The first person to solve each quest gets named in our next post.</p>
+      </div>
+      <div class="cipher-box">
+        <p class="cipher" id="cipher" aria-label="Cipher text: JDRCC KYZEXJ KFGGCV XZREKJ">JDRCC KYZEXJ KFGGCV XZREKJ</p>
+        <p class="clue">The valley holds the key. Count to the chapter where the giant falls.</p>
+        <form class="quest-form" id="questForm" autocomplete="off">
+          <label for="answer" class="hidden">Your answer</label>
+          <input type="text" id="answer" placeholder="Your answer" spellcheck="false">
+          <button class="pill solid" type="submit">Check answer</button>
+        </form>
+        <div class="quest-foot">
+          <p class="msg" id="questMsg" role="status"></p>
+          <button class="linkish" type="button" id="hintBtn">Show a hint</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CAREERS ================= -->
+<div class="view" id="v-careers" data-title="Careers | Elah">
+  <section class="section">
+    <div class="build">
+      <div>
+        <h2>Build it with us.</h2>
+        <p class="lede" style="margin-top:22px">We're looking for a founding system architect: someone who has designed chips, accelerators or the systems around them, and wants to build the first AI people actually own.</p>
+      </div>
+      <div>
+        <ul>
+          <li>Remote, US-based</li>
+          <li>Founding equity</li>
+          <li>The quest is your first interview</li>
+        </ul>
+        <div class="actions"><a class="pill solid" href="#access" data-pick="build">Apply</a></div>
+      </div>
+    </div>
+    <div class="roles">
+      <div>
+        <h3>What you'll do</h3>
+        <ul>
+          <li>Own the architecture of Elah's hardware, from first prototype to production</li>
+          <li>Decide what we build, what we buy, and what we license</li>
+          <li>Turn early research into designs a factory can make</li>
+          <li>Hire the team that comes after you</li>
+        </ul>
+      </div>
+      <div>
+        <h3>You might be right for this if</h3>
+        <ul>
+          <li>You've taken a chip, accelerator or embedded system from design to silicon</li>
+          <li>You care about energy per answer, not just speed</li>
+          <li>You'd rather build something new than tune something old</li>
+          <li>You read the quest and wanted to solve it</li>
+        </ul>
+      </div>
+    </div>
+    <ol class="steps" aria-label="How hiring works">
+      <li>Solve the quest.</li>
+      <li>Apply with a link to your work.</li>
+      <li>Talk with the founders.</li>
+    </ol>
+  </section>
+</div>
+
+<!-- ================= EARLY ACCESS ================= -->
+<div class="view" id="v-access" data-title="Early access | Elah">
+  <section class="section">
+    <div class="join">
+      <div>
+        <h2>Be first.</h2>
+        <p class="lede">The first Nodes go to a small group. Tell us who you are and we'll be in touch before anyone else hears.</p>
+        <p class="quest-note">Businesses can ask about a private pilot. Investors can talk to the founders directly.</p>
+      </div>
+      <form class="signup" id="signup" name="early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="early-access">
+        <input type="hidden" name="quest" id="questField" value="not solved">
+        <p class="hidden"><label>Leave this empty <input name="bot-field"></label></p>
+        <p class="solved-badge" id="solvedBadge">Quest solved. You're at the front of the list.</p>
+        <fieldset>
+          <legend>I'm interested as</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="interest" value="buyer" checked><span><b>Someone who wants one</b><small>Early access to Node</small></span></label>
+            <label class="choice"><input type="radio" name="interest" value="pilot"><span><b>A business</b><small>A private, on-site AI pilot</small></span></label>
+            <label class="choice"><input type="radio" name="interest" value="investor"><span><b>An investor</b><small>Talk to the founders</small></span></label>
+            <label class="choice"><input type="radio" name="interest" value="build"><span><b>A builder</b><small>The founding architect role</small></span></label>
+          </div>
+        </fieldset>
+        <div class="row">
+          <div><label for="name">Name</label><input type="text" id="name" name="name" autocomplete="name" required></div>
+          <div><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+        </div>
+        <div><label for="note" id="noteLabel">What would you use it for? (optional)</label><textarea id="note" name="note"></textarea></div>
+        <div class="actions" style="margin-top:4px; align-items:center;">
+          <button class="pill solid" type="submit" id="submitBtn">Join the list</button>
+          <p class="msg" id="formMsg" role="status"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <a class="brand" href="#home" aria-label="Back to home">
+    <svg viewBox="-1.3 -1.3 2.8 2.6" aria-hidden="true"><path d="M-.95 0H.95A.95 .95 0 1 0 .52 .79" fill="none" stroke="#fff" stroke-width=".2" stroke-linecap="round"/><circle cx="1.1" cy=".4" r=".15" fill="#E5102A"/></svg>
+    <span>elah</span>
+  </a>
+  <p>Elah takes its name from the valley where a shepherd with a sling faced a giant.</p>
+  <p>© 2026 Elah</p>
+</footer>
+
+<script>
+/* ---------- Hero: the sling releases a stone, the stone becomes Node ---------- */
+(() => {
+  const hero = document.querySelector('.hero');
+  const cv = document.getElementById('orb');
+  const ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, R = 0, lx = 0, ly = 0, S = 0;
+
+  const N = 1100, pts = [];
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < N; i++) {
+    const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = golden * i;
+    pts.push({ x: Math.cos(th) * r, y, z: Math.sin(th) * r, red: Math.random() < 0.13, d: Math.random() * 0.3 });
+  }
+  const ax = [0.35, 0.88, 0.32]; const al = Math.hypot(...ax); ax.forEach((v, i) => ax[i] = v / al);
+
+  // sling-e path in unit space
+  const path = [];
+  for (let i = 0; i <= 40; i++) path.push([-0.95 + 1.9 * i / 40, 0]);
+  const TH = 5.3;
+  for (let i = 1; i <= 120; i++) { const t = TH * i / 120; path.push([0.95 * Math.cos(t), -0.95 * Math.sin(t)]); }
+  const tan = [-Math.sin(TH), -Math.cos(TH)];
+  const rel = path[path.length - 1];
+  const stoneU = [rel[0] + tan[0] * 0.7, rel[1] + tan[1] * 0.7];
+
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (W > 900) { cx = W * 0.68; cy = H * 0.47; R = Math.min(W * 0.22, H * 0.34); }
+    else { cx = W * 0.5; cy = H * 0.33; R = Math.min(W * 0.36, H * 0.2); }
+    lx = W * 0.5; ly = H * 0.5; S = Math.min(W, H) * 0.11;
+  }
+  size(); addEventListener('resize', size); document.addEventListener('tabchange', e => { if (e.detail === 'home') size(); });
+
+  let mx = 0, my = 0, tx = 0, ty = 0;
+  addEventListener('pointermove', e => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; });
+
+  const ease = t => t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  const easeIO = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+
+  function project(p, rotY, rotX) {
+    let x = p.x * Math.cos(rotY) + p.z * Math.sin(rotY);
+    let z = -p.x * Math.sin(rotY) + p.z * Math.cos(rotY);
+    let y = p.y * Math.cos(rotX) - z * Math.sin(rotX);
+    z = p.y * Math.sin(rotX) + z * Math.cos(rotX);
+    const s = 1 + z * 0.14;
+    return [cx + x * R * s, cy + y * R * s, z];
+  }
+
+  let start = null, visible = false, running = false, readied = false;
+  const ready = () => { if (!readied) { readied = true; hero.classList.add('ready'); } };
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && !running) { running = true; requestAnimationFrame(frame); } }).observe(hero);
+
+  function drawLogo(progress, alpha) {
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 0.2 * S; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const n = Math.max(2, Math.floor(path.length * progress));
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) { const [x, y] = path[i]; i ? ctx.lineTo(lx + x * S, ly + y * S) : ctx.moveTo(lx + x * S, ly + y * S); }
+    ctx.stroke(); ctx.restore();
+  }
+  function stone(x, y, r, a = 1) {
+    ctx.save(); ctx.globalAlpha = a;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r * 4);
+    g.addColorStop(0, 'rgba(229,16,42,0.55)'); g.addColorStop(1, 'rgba(229,16,42,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * 4, 0, 7); ctx.fill();
+    ctx.fillStyle = '#E5102A'; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+    ctx.restore();
+  }
+
+  function frame(now) {
+    if (!visible) { running = false; return; }
+    if (start === null) start = now;
+    const t = reduce ? 99999 : now - start;
+    ctx.clearRect(0, 0, W, H);
+    tx += (mx - tx) * 0.04; ty += (my - ty) * 0.04;
+
+    const sx = lx + stoneU[0] * S, sy = ly + stoneU[1] * S;
+    // 1. draw the sling e
+    if (t < 1700) {
+      drawLogo(clamp(t / 1000), 1 - clamp((t - 1150) / 450));
+      if (t >= 1000 && t < 1150) stone(sx, sy, 0.14 * S, clamp((t - 1000) / 120));
+    }
+    // 2. the stone flies
+    if (t >= 1150 && t < 1800) {
+      const k = easeIO(clamp((t - 1150) / 600));
+      const qx = sx + tan[0] * S * 3, qy = sy + tan[1] * S * 3;
+      for (let j = 6; j >= 0; j--) {
+        const kk = clamp(k - j * 0.03); const u = 1 - kk;
+        const x = u * u * sx + 2 * u * kk * qx + kk * kk * cx;
+        const y = u * u * sy + 2 * u * kk * qy + kk * kk * cy;
+        stone(x, y, 0.14 * S * (1 - j * 0.11), j ? 0.25 : 1);
+      }
+    }
+    // 3. the stone becomes Node
+    if (t >= 1750) {
+      const b = (t - 1750) / 1300;
+      if (b > 0.45) ready();
+      const rotY = t * 0.00012 + tx * 0.9, rotX = 0.38 + ty * 0.5;
+      // core glow
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.25);
+      g.addColorStop(0, `rgba(229,16,42,${0.22 * clamp(b * 2)})`); g.addColorStop(0.55, 'rgba(229,16,42,0.05)'); g.addColorStop(1, 'rgba(229,16,42,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 1.25, 0, 7); ctx.fill();
+      // orbit ring + satellite stone
+      const ringA = clamp((b - 0.6) * 2.5);
+      const orb = t * 0.0005;
+      const ox = Math.cos(orb), oz = Math.sin(orb);
+      const drawSat = () => stone(cx + ox * R * 1.32, cy + oz * R * 0.31 - ox * R * 0.105, Math.max(3, R * 0.035), ringA);
+      if (ringA > 0) {
+        ctx.save(); ctx.strokeStyle = `rgba(255,255,255,${0.14 * ringA})`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.ellipse(cx, cy, R * 1.32, R * 0.32, -0.08, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+        if (oz < 0) drawSat();
+      }
+      const wave = ((t / 3800) % 1) * 2.8 - 1.4;
+      for (const p of pts) {
+        const k = reduce ? 1 : ease(clamp((b - p.d) / 0.75));
+        if (k <= 0) continue;
+        const [px, py, z] = project(p, rotY, rotX);
+        const x = cx + (px - cx) * k, y = cy + (py - cy) * k;
+        const depth = (z + 1) / 2;
+        const band = Math.abs(p.x * ax[0] + p.y * ax[1] + p.z * ax[2] - wave) < 0.06;
+        let a = (0.12 + depth * 0.88) * clamp(k * 1.4);
+        let r = 0.5 + depth * 1.5;
+        if (band) { r += 0.7; ctx.fillStyle = `rgba(229,16,42,${Math.min(1, a + 0.3)})`; }
+        else ctx.fillStyle = p.red ? `rgba(229,16,42,${a})` : `rgba(255,255,255,${a})`;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+      }
+      if (ringA > 0 && oz >= 0) drawSat();
+    }
+    if (reduce) { ready(); running = false; return; }
+    requestAnimationFrame(frame);
+  }
+})();
+
+/* ---------- Manifesto: lines light up as you read ---------- */
+(() => {
+  const lines = document.querySelectorAll('.manifesto p');
+  if (!('IntersectionObserver' in window)) { lines.forEach(l => l.classList.add('lit')); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('lit'); io.unobserve(e.target); } }), { rootMargin: '-40% 0px -40% 0px' });
+  lines.forEach(l => io.observe(l));
+})();
+
+/* ---------- The quest ---------- */
+(() => {
+  const ANSWER_HASH = 'b36bab97c28b33c04c4930d98f43a53a67a70f63a11887cbebe1923e82838ffb';
+  const hints = [
+    'The valley is Elah. The giant falls in 1 Samuel.',
+    'Every letter has moved forward the same number of places in the alphabet.',
+  ];
+  let hintIx = 0;
+  const msg = document.getElementById('questMsg');
+  const hintBtn = document.getElementById('hintBtn');
+  hintBtn.addEventListener('click', () => {
+    msg.className = 'msg'; msg.textContent = hints[hintIx];
+    hintIx = Math.min(hintIx + 1, hints.length - 1);
+    if (hintIx === hints.length - 1) hintBtn.textContent = 'Show the other hint';
+  });
+  async function sha(s) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  document.getElementById('questForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const raw = document.getElementById('answer').value.toUpperCase().replace(/[^A-Z]/g, '');
+    if (!raw) { msg.className = 'msg err'; msg.textContent = 'Type your answer first.'; return; }
+    let ok = false;
+    try { ok = (await sha(raw)) === ANSWER_HASH; } catch (_) { ok = raw === 'SMALLTHINGSTOPPLEGIANTS'; }
+    if (ok) {
+      msg.className = 'msg ok'; msg.textContent = 'Solved. Leave your details below to claim your place.';
+      document.getElementById('questField').value = 'solved';
+      document.getElementById('solvedBadge').classList.add('on');
+      setTimeout(() => { location.hash = 'access'; }, 900);
+    } else {
+      msg.className = 'msg err'; msg.textContent = 'Not quite. Check the shift and try again.';
+    }
+  });
+})();
+
+/* ---------- Early access form ----------
+   Paste your Formspree form URL below (formspree.io, free plan). Until then the form shows a "check back soon" message. */
+(() => {
+  const FORM_ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxx'
+  const form = document.getElementById('signup');
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('formMsg');
+  const noteLabel = document.getElementById('noteLabel');
+  const copy = {
+    buyer:    ['Join the list', 'What would you use it for? (optional)', "You're on the list. We'll write before anyone else hears."],
+    pilot:    ['Request a pilot', 'Company, team size, and what you want to run privately (optional)', "Pilot request sent. We'll reply within a few days."],
+    investor: ['Start a conversation', 'Fund or firm, and what you focus on (optional)', "Message sent. The founders will be in touch."],
+    build:    ['Apply', 'A link to your work, and one thing you built that you are proud of', "Application sent. If you haven't solved the quest yet, now's the time."],
+  };
+  const pick = v => { const c = copy[v]; btn.textContent = c[0]; noteLabel.textContent = c[1]; };
+  form.querySelectorAll('input[name=interest]').forEach(r => r.addEventListener('change', () => pick(r.value)));
+  document.querySelectorAll('[data-pick]').forEach(a => a.addEventListener('click', () => {
+    const r = form.querySelector(`input[value="${a.dataset.pick}"]`); r.checked = true; pick(r.value);
+  }));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const nameEl = form.elements.namedItem('name'), emailEl = form.elements.namedItem('email');
+    const name = nameEl.value.trim(), email = emailEl.value.trim();
+    if (!name) { msg.className = 'msg err'; msg.textContent = 'Add your name.'; nameEl.focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = 'msg err'; msg.textContent = 'Enter a valid email address.'; emailEl.focus(); return; }
+    const interest = form.querySelector('input[name=interest]:checked').value;
+    let inPreview = false; try { inPreview = window.self !== window.top; } catch (_) { inPreview = true; }
+    if (!FORM_ENDPOINT) { msg.className = 'msg'; msg.textContent = inPreview ? 'Preview only: the form starts collecting once the site is live.' : 'Sign-ups open very soon. Please check back shortly.'; return; }
+    btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Sending…';
+    const data = new FormData(form);
+    try {
+      data.delete('bot-field'); data.delete('form-name');
+      data.append('_subject', 'Elah early access: ' + interest);
+      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(res.status);
+      msg.className = 'msg ok'; msg.textContent = copy[interest][2]; form.reset();
+      form.querySelector('input[value="' + interest + '"]').checked = true;
+    } catch (_) {
+      msg.className = 'msg err'; msg.textContent = "Couldn't send right now. Check your connection and try again.";
+    } finally { btn.disabled = false; }
+  });
+})();
+
+/* ---------- Tabs (routed on the URL hash so each tab can be linked) ---------- */
+(() => {
+  const tabs = ['home', 'node', 'quest', 'careers', 'access'];
+  const links = document.querySelectorAll('[data-tab]');
+  function show() {
+    const h = location.hash.slice(1);
+    const tab = tabs.includes(h) ? h : 'home';
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'v-' + tab));
+    links.forEach(a => a.dataset.tab === tab ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+    const view = document.getElementById('v-' + tab);
+    document.title = view.dataset.title;
+    window.scrollTo(0, 0);
+    document.dispatchEvent(new CustomEvent('tabchange', { detail: tab }));
+  }
+  addEventListener('hashchange', show);
+  show();
+})();
+
+/* ---------- Home: a day with Node ---------- */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const moments = [
+    { time: '7:40 AM', say: "Morning. Forty-two emails came in overnight. Three need you before ten, and I've drafted replies for all three.", foot: 'It read your inbox on the device. Nothing left the room.' },
+    { time: '2:15 PM', say: "Love the idea. Here are four directions for the packaging. Want me to build the second one in 3D so you can turn it around?", foot: 'You talk. It sketches, renders and revises with you.' },
+    { time: '11:30 PM', say: "Goodnight. While you sleep, I'll sort today's notes and finish the report. It'll be on your desk by morning.", foot: 'Overnight, it gets a little better at being yours.' },
+  ];
+  const say = document.getElementById('say'), foot = document.getElementById('sayFoot'), clock = document.getElementById('clock');
+  const btns = document.querySelectorAll('.times button');
+  let timer = null, current = -1, auto = null, touched = false;
+
+  function play(i) {
+    if (i === current) return;
+    current = i;
+    btns.forEach((b, j) => b.setAttribute('aria-selected', j === i ? 'true' : 'false'));
+    const m = moments[i];
+    clock.textContent = m.time; foot.textContent = m.foot;
+    clearInterval(timer);
+    if (reduce) { say.textContent = m.say; return; }
+    let n = 0; say.innerHTML = '<span class="caret"></span>';
+    timer = setInterval(() => {
+      n += 1;
+      say.innerHTML = '';
+      say.append(document.createTextNode(m.say.slice(0, n)));
+      const c = document.createElement('span'); c.className = 'caret'; say.append(c);
+      if (n >= m.say.length) clearInterval(timer);
+    }, 26);
+  }
+  btns.forEach((b, i) => b.addEventListener('click', () => { touched = true; clearInterval(auto); play(i); }));
+
+  // Start when the panel scrolls into view, then move through the day until someone picks a time.
+  const screen = document.querySelector('.screen');
+  let started = false;
+  new IntersectionObserver(es => {
+    if (es[0].isIntersecting && !started) {
+      started = true; play(0);
+      if (!reduce) auto = setInterval(() => { if (!touched) play((current + 1) % moments.length); }, 7500);
+    }
+  }, { threshold: 0.4 }).observe(screen);
+})();
+
+</script>
+</body>
+</html>

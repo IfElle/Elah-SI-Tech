@@ -716,10 +716,9 @@ footer p { max-width: 40ch; }
   });
 })();
 
-/* ---------- Early access form ----------
-   Paste your Formspree form URL below (formspree.io, free plan). Until then the form shows a "check back soon" message. */
+/* ---------- Early access form ---------- */
 (() => {
-  const FORM_ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxx'
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/dsilvamerrill@gmail.com';
   const form = document.getElementById('signup');
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('formMsg');
@@ -748,6 +747,7 @@ footer p { max-width: 40ch; }
     btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Sending…';
     const data = new FormData(form);
     try {
+      data.append('_honey', data.get('bot-field') || '');
       data.delete('bot-field'); data.delete('form-name');
       data.append('_subject', 'Elah early access: ' + interest);
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });

@@ -716,47 +716,50 @@ footer p { max-width: 40ch; }
   });
 })();
 
-/* ---------- Early access form ---------- */
+/* ---------- Early access form: sends the details to Elah on WhatsApp ----------
+   Put your WhatsApp number below: country code + number, digits only (e.g. 919876543210 for India). */
 (() => {
-  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/dsilvamerrill@gmail.com';
+  const WHATSAPP_NUMBER = '919354884112';
   const form = document.getElementById('signup');
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('formMsg');
   const noteLabel = document.getElementById('noteLabel');
   const copy = {
-    buyer:    ['Join the list', 'What would you use it for? (optional)', "You're on the list. We'll write before anyone else hears."],
-    pilot:    ['Request a pilot', 'Company, team size, and what you want to run privately (optional)', "Pilot request sent. We'll reply within a few days."],
-    investor: ['Start a conversation', 'Fund or firm, and what you focus on (optional)', "Message sent. The founders will be in touch."],
-    build:    ['Apply', 'A link to your work, and one thing you built that you are proud of', "Application sent. If you haven't solved the quest yet, now's the time."],
+    buyer:    ['Join the list', 'What would you use it for? (optional)', 'Someone who wants a Node'],
+    pilot:    ['Request a pilot', 'Company, team size, and what you want to run privately (optional)', 'A business pilot'],
+    investor: ['Start a conversation', 'Fund or firm, and what you focus on (optional)', 'An investor'],
+    build:    ['Apply', 'A link to your work, and one thing you built that you are proud of', 'The founding architect role'],
   };
-  const pick = v => { const c = copy[v]; btn.textContent = c[0]; noteLabel.textContent = c[1]; };
+  const pick = v => { const c = copy[v]; btn.textContent = c[0] + ' on WhatsApp'; noteLabel.textContent = c[1]; };
+  pick(form.querySelector('input[name=interest]:checked').value);
   form.querySelectorAll('input[name=interest]').forEach(r => r.addEventListener('change', () => pick(r.value)));
   document.querySelectorAll('[data-pick]').forEach(a => a.addEventListener('click', () => {
     const r = form.querySelector(`input[value="${a.dataset.pick}"]`); r.checked = true; pick(r.value);
   }));
 
-  form.addEventListener('submit', async e => {
+  form.addEventListener('submit', e => {
     e.preventDefault();
-    const nameEl = form.elements.namedItem('name'), emailEl = form.elements.namedItem('email');
-    const name = nameEl.value.trim(), email = emailEl.value.trim();
-    if (!name) { msg.className = 'msg err'; msg.textContent = 'Add your name.'; nameEl.focus(); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = 'msg err'; msg.textContent = 'Enter a valid email address.'; emailEl.focus(); return; }
+    const get = n => (form.elements.namedItem(n).value || '').trim();
+    const name = get('name'), email = get('email'), note = get('note');
+    if (form.elements.namedItem('bot-field').value) return;
+    if (!name) { msg.className = 'msg err'; msg.textContent = 'Add your name.'; form.elements.namedItem('name').focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = 'msg err'; msg.textContent = 'Enter a valid email address.'; form.elements.namedItem('email').focus(); return; }
+    if (!WHATSAPP_NUMBER) { msg.className = 'msg'; msg.textContent = 'Sign-ups open very soon. Please check back shortly.'; return; }
     const interest = form.querySelector('input[name=interest]:checked').value;
-    let inPreview = false; try { inPreview = window.self !== window.top; } catch (_) { inPreview = true; }
-    if (!FORM_ENDPOINT) { msg.className = 'msg'; msg.textContent = inPreview ? 'Preview only: the form starts collecting once the site is live.' : 'Sign-ups open very soon. Please check back shortly.'; return; }
-    btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Sending…';
-    const data = new FormData(form);
-    try {
-      data.append('_honey', data.get('bot-field') || '');
-      data.delete('bot-field'); data.delete('form-name');
-      data.append('_subject', 'Elah early access: ' + interest);
-      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-      if (!res.ok) throw new Error(res.status);
-      msg.className = 'msg ok'; msg.textContent = copy[interest][2]; form.reset();
-      form.querySelector('input[value="' + interest + '"]').checked = true;
-    } catch (_) {
-      msg.className = 'msg err'; msg.textContent = "Couldn't send right now. Check your connection and try again.";
-    } finally { btn.disabled = false; }
+    const solved = get('quest') === 'solved';
+    const text = [
+      'Hi Elah, I\'d like early access.',
+      '',
+      'Interested as: ' + copy[interest][2],
+      'Name: ' + name,
+      'Email: ' + email,
+      note ? 'Note: ' + note : '',
+      solved ? 'Quest: solved' : '',
+    ].filter((l, i) => l || i === 1).join('\n');
+    const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
+    msg.className = 'msg ok';
+    msg.innerHTML = 'Opening WhatsApp. Tap <b>Send</b> there to finish. <a href="' + url + '" target="_blank" rel="noopener">Open it again</a>';
+    window.location.href = url;
   });
 })();
 

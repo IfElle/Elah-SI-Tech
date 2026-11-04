@@ -127,6 +127,12 @@ p { margin: 0; }
 .msg.ok { color: var(--white); }
 .msg.err { color: #ff6b7c; }
 
+.quest-send { display: grid; gap: 16px; margin-top: 28px; }
+.poster { margin: 0; }
+.poster img { width: 100%; height: auto; display: block; border-radius: 18px; border: 1px solid var(--line); }
+.poster figcaption { color: var(--ash); font-size: 0.88rem; margin-top: 10px; }
+.quest .quest-note a { color: var(--white); }
+
 /* build */
 .build { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: end; }
 .build ul { list-style: none; padding: 0; margin: 26px 0 0; color: #C9C9C9; }
@@ -394,7 +400,7 @@ footer p { max-width: 40ch; }
       <p>Elah is building a personal AI that lives with you, not in a data center. Private by design. Yours from the first word.</p>
       <div class="actions">
         <a class="pill solid" href="#access">Get early access</a>
-        <a class="pill ghost" href="#quest">Try the quest</a>
+        <a class="pill ghost" href="#quest">Take the side quest</a>
       </div>
     </div>
     <p class="hero-note">In stealth.<br>Arriving soon.</p>
@@ -479,8 +485,8 @@ footer p { max-width: 40ch; }
     <h2>Go further.</h2>
     <div class="explore">
       <a class="door" href="#node"><h3>Meet Node</h3><p>What it is, and what it will do for you.</p><span class="go">See Node</span></a>
-      <a class="door" href="#quest"><h3>The quest</h3><p>Solve the cipher and move to the front of the list.</p><span class="go">Take the quest</span></a>
-      <a class="door" href="#careers"><h3>Build it with us</h3><p>We're hiring a founding system architect.</p><span class="go">See the role</span></a>
+      <a class="door" href="#quest"><h3>The next step</h3><p>A network that spells one word. Time is the value.</p><span class="go">Take the side quest</span></a>
+      <a class="door" href="#careers"><h3>Build it with us</h3><p>We're hiring a founding System Architecture Engineer.</p><span class="go">See the role</span></a>
     </div>
   </section>
 
@@ -517,27 +523,30 @@ footer p { max-width: 40ch; }
 </div>
 
 <!-- ================= QUEST ================= -->
-<div class="view" id="v-quest" data-title="The quest | Elah">
+<div class="view" id="v-quest" data-title="The next step | Elah">
   <section class="section">
     <div class="quest">
       <div>
-        <h2>The quest.</h2>
-        <p class="lede">The people we build for like a puzzle. Solve this one and you move to the front of the early-access list.</p>
-        <p class="quest-note">The first person to solve each quest gets named in our next post.</p>
-      </div>
-      <div class="cipher-box">
-        <p class="cipher" id="cipher" aria-label="Cipher text: JDRCC KYZEXJ KFGGCV XZREKJ">JDRCC KYZEXJ KFGGCV XZREKJ</p>
-        <p class="clue">The valley holds the key. Count to the chapter where the giant falls.</p>
-        <form class="quest-form" id="questForm" autocomplete="off">
-          <label for="answer" class="hidden">Your answer</label>
-          <input type="text" id="answer" placeholder="Your answer" spellcheck="false">
-          <button class="pill solid" type="submit">Check answer</button>
+        <h2>The next step.</h2>
+        <p class="lede">The network spells one word. Time is the value.</p>
+        <p class="quest-note">An optional side quest for the people we want to build with. Just curious? Ask an AI to crack it and learn something fun. Know why the answer is right? Send us the word and the why.</p>
+        <form class="quest-send" id="questForm" autocomplete="off" novalidate>
+          <div><label for="qWord">The word</label><input type="text" id="qWord" spellcheck="false" autocapitalize="characters"></div>
+          <div><label for="qWhy">The why: how you read the network</label><textarea id="qWhy" placeholder="Walk us through at least one output channel."></textarea></div>
+          <div><label for="qName">Your name, and a link to your work (optional)</label><input type="text" id="qName"></div>
+          <div class="actions" style="margin-top:4px; align-items:center;">
+            <button class="pill solid" type="submit">Send on WhatsApp</button>
+            <p class="msg" id="questMsg" role="status"></p>
+          </div>
         </form>
-        <div class="quest-foot">
-          <p class="msg" id="questMsg" role="status"></p>
-          <button class="linkish" type="button" id="hintBtn">Show a hint</button>
-        </div>
+        <p class="quest-note">Rather not do puzzles? <a href="#careers">See the role</a> and send us your work instead.</p>
       </div>
+      <figure class="poster">
+        <a href="quest-poster.png" target="_blank" rel="noopener" aria-label="Open the full-size puzzle">
+          <img src="quest-poster-1200.png" width="1200" height="1500" alt="Elah recruiting poster: a network of timed spiking nodes marked with first-arrival, last-arrival and second-arrival symbols, a hex string in the corner, and a stepped waveform in the side-quest card.">
+        </a>
+        <figcaption>Tap to open full size.</figcaption>
+      </figure>
     </div>
   </section>
 </div>
@@ -547,16 +556,17 @@ footer p { max-width: 40ch; }
   <section class="section">
     <div class="build">
       <div>
-        <h2>Build it with us.</h2>
-        <p class="lede" style="margin-top:22px">We're looking for a founding system architect: someone who has designed chips, accelerators or the systems around them, and wants to build the first AI people actually own.</p>
+        <h2>The next computer won't think like a computer.</h2>
+        <p class="lede" style="margin-top:22px">We're hiring a founding System Architecture Engineer to help build it. Small team. Giant problem.</p>
+        <div class="files" style="margin-top:22px"><span class="badge">Photonics</span><span class="badge">Neuromorphic</span><span class="badge">AI/ML</span></div>
       </div>
       <div>
         <ul>
-          <li>Remote, US-based</li>
+          <li>Remote</li>
           <li>Founding equity</li>
-          <li>The quest is your first interview</li>
+          <li>US company</li>
         </ul>
-        <div class="actions"><a class="pill solid" href="#access" data-pick="build">Apply</a></div>
+        <div class="actions"><a class="pill solid" href="#quest">Take the side quest</a><a class="pill ghost" href="#access" data-pick="build">Apply without it</a></div>
       </div>
     </div>
     <div class="roles">
@@ -575,13 +585,13 @@ footer p { max-width: 40ch; }
           <li>You've taken a chip, accelerator or embedded system from design to silicon</li>
           <li>You care about energy per answer, not just speed</li>
           <li>You'd rather build something new than tune something old</li>
-          <li>You read the quest and wanted to solve it</li>
+          <li>You looked at the side quest and wanted to trace it</li>
         </ul>
       </div>
     </div>
     <ol class="steps" aria-label="How hiring works">
-      <li>Solve the quest.</li>
-      <li>Apply with a link to your work.</li>
+      <li>Take the side quest, if you like. It's optional.</li>
+      <li>Send us the word and the why, or a link to your work.</li>
       <li>Talk with the founders.</li>
     </ol>
   </section>
@@ -598,10 +608,8 @@ footer p { max-width: 40ch; }
       </div>
       <form class="signup" id="signup" name="early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="early-access">
-        <input type="hidden" name="quest" id="questField" value="not solved">
-        <p class="hidden"><label>Leave this empty <input name="bot-field"></label></p>
-        <p class="solved-badge" id="solvedBadge">Quest solved. You're at the front of the list.</p>
-        <fieldset>
+                <p class="hidden"><label>Leave this empty <input name="bot-field"></label></p>
+                <fieldset>
           <legend>I'm interested as</legend>
           <div class="choices">
             <label class="choice"><input type="radio" name="interest" value="buyer" checked><span><b>Someone who wants one</b><small>Early access to Node</small></span></label>
@@ -780,39 +788,22 @@ footer p { max-width: 40ch; }
   lines.forEach(l => io.observe(l));
 })();
 
-/* ---------- The quest ---------- */
+/* ---------- The next step: answers go to Elah on WhatsApp (the answer is never stored in this page) ---------- */
 (() => {
-  const ANSWER_HASH = 'b36bab97c28b33c04c4930d98f43a53a67a70f63a11887cbebe1923e82838ffb';
-  const hints = [
-    'The valley is Elah. The giant falls in 1 Samuel.',
-    'Every letter has moved forward the same number of places in the alphabet.',
-  ];
-  let hintIx = 0;
-  const msg = document.getElementById('questMsg');
-  const hintBtn = document.getElementById('hintBtn');
-  hintBtn.addEventListener('click', () => {
-    msg.className = 'msg'; msg.textContent = hints[hintIx];
-    hintIx = Math.min(hintIx + 1, hints.length - 1);
-    if (hintIx === hints.length - 1) hintBtn.textContent = 'Show the other hint';
-  });
-  async function sha(s) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
-    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-  document.getElementById('questForm').addEventListener('submit', async e => {
+  const NUMBER = '919354884112';
+  const f = document.getElementById('questForm'), msg = document.getElementById('questMsg');
+  f.addEventListener('submit', e => {
     e.preventDefault();
-    const raw = document.getElementById('answer').value.toUpperCase().replace(/[^A-Z]/g, '');
-    if (!raw) { msg.className = 'msg err'; msg.textContent = 'Type your answer first.'; return; }
-    let ok = false;
-    try { ok = (await sha(raw)) === ANSWER_HASH; } catch (_) { ok = raw === 'SMALLTHINGSTOPPLEGIANTS'; }
-    if (ok) {
-      msg.className = 'msg ok'; msg.textContent = 'Solved. Leave your details below to claim your place.';
-      document.getElementById('questField').value = 'solved';
-      document.getElementById('solvedBadge').classList.add('on');
-      setTimeout(() => { location.hash = 'access'; }, 900);
-    } else {
-      msg.className = 'msg err'; msg.textContent = 'Not quite. Check the shift and try again.';
-    }
+    const word = document.getElementById('qWord').value.trim().toUpperCase();
+    const why = document.getElementById('qWhy').value.trim();
+    const who = document.getElementById('qName').value.trim();
+    if (!word) { msg.className = 'msg err'; msg.textContent = 'Add the word.'; document.getElementById('qWord').focus(); return; }
+    if (why.length < 20) { msg.className = 'msg err'; msg.textContent = 'Add the why. That part matters more than the word.'; document.getElementById('qWhy').focus(); return; }
+    const text = ['Hi Elah, the next step.', '', 'Word: ' + word, 'Why: ' + why, who ? 'From: ' + who : ''].filter(Boolean).join('\n').replace('step.\n', 'step.\n\n');
+    const url = 'https://wa.me/' + NUMBER + '?text=' + encodeURIComponent(text);
+    msg.className = 'msg ok';
+    msg.innerHTML = 'Opening WhatsApp. Tap <b>Send</b> there to finish. <a href="' + url + '" target="_blank" rel="noopener">Open it again</a>';
+    window.location.href = url;
   });
 })();
 
@@ -846,7 +837,6 @@ footer p { max-width: 40ch; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = 'msg err'; msg.textContent = 'Enter a valid email address.'; form.elements.namedItem('email').focus(); return; }
     if (!WHATSAPP_NUMBER) { msg.className = 'msg'; msg.textContent = 'Sign-ups open very soon. Please check back shortly.'; return; }
     const interest = form.querySelector('input[name=interest]:checked').value;
-    const solved = get('quest') === 'solved';
     const text = [
       'Hi Elah, I\'d like early access.',
       '',
@@ -854,7 +844,6 @@ footer p { max-width: 40ch; }
       'Name: ' + name,
       'Email: ' + email,
       note ? 'Note: ' + note : '',
-      solved ? 'Quest: solved' : '',
     ].filter((l, i) => l || i === 1).join('\n');
     const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
     msg.className = 'msg ok';

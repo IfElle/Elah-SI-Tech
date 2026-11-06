@@ -133,6 +133,11 @@ p { margin: 0; }
 .msg.err { color: #ff6b7c; }
 
 .quest-send { display: grid; gap: 16px; margin-top: 28px; }
+.level-tag { display: inline-block; background: var(--white); color: var(--black); font-weight: 600; font-size: 0.9rem; border-radius: 999px; padding: 6px 14px; margin-bottom: 22px; }
+.clues { list-style: none; padding: 0; margin: 26px 0 0; }
+.clues li { padding: 12px 0; border-bottom: 1px solid var(--line); color: #D6D6D6; }
+.poster video { width: 100%; height: auto; display: block; border-radius: 18px; border: 1px solid var(--line); background: #000; }
+.poster figcaption a { color: var(--white); }
 .poster { margin: 0; }
 .poster img { width: 100%; height: auto; display: block; border-radius: 18px; border: 1px solid var(--line); }
 .poster figcaption { color: var(--ash); font-size: 0.88rem; margin-top: 10px; }
@@ -405,7 +410,7 @@ footer p { max-width: 40ch; }
       <p>Elah is building a personal AI that lives with you, not in a data center. Private by design. Yours from the first word.</p>
       <div class="actions">
         <a class="pill solid" href="#access">Get early access</a>
-        <a class="pill ghost" href="#quest">Take the side quest</a>
+        <a class="pill ghost" href="#quest">Try the puzzle</a>
       </div>
     </div>
     <p class="hero-note">In stealth.<br>Arriving soon.</p>
@@ -490,7 +495,7 @@ footer p { max-width: 40ch; }
     <h2>Go further.</h2>
     <div class="explore">
       <a class="door" href="#node"><h3>Meet Node</h3><p>What it is, and what it will do for you.</p><span class="go">See Node</span></a>
-      <a class="door" href="#quest"><h3>The next step</h3><p>A network that spells one word. Time is the value.</p><span class="go">Take the side quest</span></a>
+      <a class="door" href="#quest"><h3>Puzzle, level 2</h3><p>A meter that keeps counting, and a dot that keeps talking.</p><span class="go">Try the puzzle</span></a>
       <a class="door" href="#careers"><h3>Build it with us</h3><p>We're hiring a founding System Architecture Engineer.</p><span class="go">See the role</span></a>
     </div>
   </section>
@@ -528,29 +533,33 @@ footer p { max-width: 40ch; }
 </div>
 
 <!-- ================= QUEST ================= -->
-<div class="view" id="v-quest" data-title="The next step | Elah">
+<div class="view" id="v-quest" data-title="Puzzle level 2 | Elah">
   <section class="section">
     <div class="quest">
       <div>
-        <h2>The next step.</h2>
-        <p class="lede">The network spells one word. Time is the value.</p>
-        <p class="quest-note">An optional side quest for the people we want to build with. Just curious? Ask an AI to crack it and learn something fun. Know why the answer is right? Send us the word and the why.</p>
-        <form class="quest-send" id="questForm" autocomplete="off" novalidate>
-          <div><label for="qWord">The word</label><input type="text" id="qWord" spellcheck="false" autocapitalize="characters"></div>
-          <div><label for="qWhy">The why: how you read the network</label><textarea id="qWhy" placeholder="Walk us through at least one output channel."></textarea></div>
-          <div><label for="qName">Your name, and a link to your work (optional)</label><input type="text" id="qName"></div>
+        <span class="level-tag">Puzzle · Level 2</span>
+        <h2>The Meter.</h2>
+        <p class="lede">Every word you send to the cloud is metered. This video is too.</p>
+        <ul class="clues">
+          <li>The dot isn't counting. It's talking.</li>
+          <li>The last word you found still matters.</li>
+          <li>Use any AI you like. You will still need to think.</li>
+        </ul>
+        <p class="quest-note">The first person to crack it wins. Send us the word, and how you found it.</p>
+        <form class="quest-send" id="meterForm" autocomplete="off" novalidate>
+          <div><label for="mWord">The word</label><input type="text" id="mWord" spellcheck="false" autocapitalize="characters"></div>
+          <div><label for="mWhy">How you found it</label><textarea id="mWhy" placeholder="What did you measure, and how did you read it?"></textarea></div>
+          <div><label for="mName">Your name or LinkedIn (optional)</label><input type="text" id="mName"></div>
           <div class="actions" style="margin-top:4px; align-items:center;">
             <button class="pill solid" type="submit">Send on WhatsApp</button>
-            <p class="msg" id="questMsg" role="status"></p>
+            <p class="msg" id="meterMsg" role="status"></p>
           </div>
         </form>
-        <p class="quest-note">Rather not do puzzles? <a href="#careers">See the role</a> and send us your work instead.</p>
+        <p class="quest-note">Level 1 ran on LinkedIn. Building something? The hiring side quest is on <a href="#careers">Careers</a>.</p>
       </div>
       <figure class="poster">
-        <a href="quest-poster.png" target="_blank" rel="noopener" aria-label="Open the full-size puzzle">
-          <img src="quest-poster-1200.png" width="1200" height="1500" alt="Elah recruiting poster: a network of timed spiking nodes marked with first-arrival, last-arrival and second-arrival symbols, a hex string in the corner, and a stepped waveform in the side-quest card.">
-        </a>
-        <figcaption>Tap to open full size.</figcaption>
+        <video src="level2-meter.mp4" poster="level2-poster.jpg" controls playsinline muted loop preload="metadata" width="1080" height="1350" aria-label="The Meter: a counter labelled words metered ticks upward while a red dot blinks."></video>
+        <figcaption><a href="level2-meter.mp4" download>Download the video</a> to study it frame by frame.</figcaption>
       </figure>
     </div>
   </section>
@@ -571,7 +580,7 @@ footer p { max-width: 40ch; }
           <li>Founding equity</li>
           <li>US company</li>
         </ul>
-        <div class="actions"><a class="pill solid" href="#quest">Take the side quest</a><a class="pill ghost" href="#access" data-pick="build">Apply without it</a></div>
+        <div class="actions"><a class="pill solid" href="#careers" data-scrollto="hiringQuest">Take the side quest</a><a class="pill ghost" href="#access" data-pick="build">Apply without it</a></div>
       </div>
     </div>
     <div class="roles">
@@ -599,6 +608,31 @@ footer p { max-width: 40ch; }
       <li>Send us the word and the why, or a link to your work.</li>
       <li>Talk with the founders.</li>
     </ol>
+  </section>
+  <section class="section" id="hiringQuest">
+    <div class="quest">
+      <div>
+        <span class="level-tag">Hiring side quest</span>
+        <h2>The next step.</h2>
+        <p class="lede">The network spells one word. Time is the value.</p>
+        <p class="quest-note">Optional, for the people we want to build with. Just curious? Ask an AI to crack it and learn something fun. Know why the answer is right? Send us the word and the why.</p>
+        <form class="quest-send" id="questForm" autocomplete="off" novalidate>
+          <div><label for="qWord">The word</label><input type="text" id="qWord" spellcheck="false" autocapitalize="characters"></div>
+          <div><label for="qWhy">The why: how you read the network</label><textarea id="qWhy" placeholder="Walk us through at least one output channel."></textarea></div>
+          <div><label for="qName">Your name, and a link to your work (optional)</label><input type="text" id="qName"></div>
+          <div class="actions" style="margin-top:4px; align-items:center;">
+            <button class="pill solid" type="submit">Send on WhatsApp</button>
+            <p class="msg" id="questMsg" role="status"></p>
+          </div>
+        </form>
+      </div>
+      <figure class="poster">
+        <a href="quest-poster.png" target="_blank" rel="noopener" aria-label="Open the full-size puzzle">
+          <img src="quest-poster-1200.png" width="1200" height="1500" alt="Elah recruiting poster: a network of timed spiking nodes marked with first-arrival, last-arrival and second-arrival symbols, a hex string in the corner, and a stepped waveform in the side-quest card.">
+        </a>
+        <figcaption>Tap to open full size.</figcaption>
+      </figure>
+    </div>
   </section>
 </div>
 
@@ -793,23 +827,31 @@ footer p { max-width: 40ch; }
   lines.forEach(l => io.observe(l));
 })();
 
-/* ---------- The next step: answers go to Elah on WhatsApp (the answer is never stored in this page) ---------- */
+/* ---------- Puzzle answers go to Elah on WhatsApp (answers are never stored in this page) ---------- */
 (() => {
   const NUMBER = '919354884112';
-  const f = document.getElementById('questForm'), msg = document.getElementById('questMsg');
-  f.addEventListener('submit', e => {
-    e.preventDefault();
-    const word = document.getElementById('qWord').value.trim().toUpperCase();
-    const why = document.getElementById('qWhy').value.trim();
-    const who = document.getElementById('qName').value.trim();
-    if (!word) { msg.className = 'msg err'; msg.textContent = 'Add the word.'; document.getElementById('qWord').focus(); return; }
-    if (why.length < 20) { msg.className = 'msg err'; msg.textContent = 'Add the why. That part matters more than the word.'; document.getElementById('qWhy').focus(); return; }
-    const text = ['Hi Elah, the next step.', '', 'Word: ' + word, 'Why: ' + why, who ? 'From: ' + who : ''].filter(Boolean).join('\n').replace('step.\n', 'step.\n\n');
-    const url = 'https://wa.me/' + NUMBER + '?text=' + encodeURIComponent(text);
-    msg.className = 'msg ok';
-    msg.innerHTML = 'Opening WhatsApp. Tap <b>Send</b> there to finish. <a href="' + url + '" target="_blank" rel="noopener">Open it again</a>';
-    window.location.href = url;
-  });
+  function wire(formId, ids, title, whyLabel, msgId) {
+    const f = document.getElementById(formId), msg = document.getElementById(msgId);
+    f.addEventListener('submit', e => {
+      e.preventDefault();
+      const v = id => document.getElementById(id).value.trim();
+      const word = v(ids[0]).toUpperCase(), why = v(ids[1]), who = v(ids[2]);
+      if (!word) { msg.className = 'msg err'; msg.textContent = 'Add the word.'; document.getElementById(ids[0]).focus(); return; }
+      if (why.length < 20) { msg.className = 'msg err'; msg.textContent = 'Tell us how you got it. That part matters more than the word.'; document.getElementById(ids[1]).focus(); return; }
+      const text = 'Hi Elah, ' + title + '\n\nWord: ' + word + '\n' + whyLabel + ': ' + why + (who ? '\nFrom: ' + who : '');
+      const url = 'https://wa.me/' + NUMBER + '?text=' + encodeURIComponent(text);
+      msg.className = 'msg ok';
+      msg.innerHTML = 'Opening WhatsApp. Tap <b>Send</b> there to finish. <a href="' + url + '" target="_blank" rel="noopener">Open it again</a>';
+      window.location.href = url;
+    });
+  }
+  wire('meterForm', ['mWord', 'mWhy', 'mName'], 'puzzle level 2 (the Meter).', 'How', 'meterMsg');
+  wire('questForm', ['qWord', 'qWhy', 'qName'], 'the next step (hiring side quest).', 'Why', 'questMsg');
+  document.querySelectorAll('[data-scrollto]').forEach(a => a.addEventListener('click', e => {
+    const el = document.getElementById(a.dataset.scrollto);
+    if (location.hash === '#careers' && el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+    else setTimeout(() => el && el.scrollIntoView(), 50);
+  }));
 })();
 
 /* ---------- Early access form: sends the details to Elah on WhatsApp ----------

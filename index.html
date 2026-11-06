@@ -143,6 +143,34 @@ p { margin: 0; }
 .poster figcaption { color: var(--ash); font-size: 0.88rem; margin-top: 10px; }
 .quest .quest-note a { color: var(--white); }
 
+/* film */
+.film-sec { padding: 10vh var(--pad) 4vh; }
+.film-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: end; margin-bottom: 36px; }
+.film-sec h2 { font-size: clamp(2.2rem, 5vw, 4.2rem); letter-spacing: -0.035em; line-height: 1.04; }
+.film-frame { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: #050818 url(film/samantha-loop-poster.jpg) center / cover; cursor: pointer; }
+.film-loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.film-frame::after { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 50% 50%, rgba(0,0,0,0.05), rgba(0,0,0,0.45)); transition: background .3s; }
+.film-play { position: absolute; z-index: 1; left: 50%; top: 50%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 12px; padding: 16px 26px 16px 20px; border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); color: var(--white); font: 600 1.1rem var(--text); white-space: nowrap; transition: background .25s, transform .25s; }
+.film-play svg { width: 26px; height: 26px; }
+.film-play small { color: rgba(255,255,255,0.7); font-weight: 500; font-size: 0.95rem; }
+.film-frame:hover .film-play, .film-frame:focus-visible .film-play { background: var(--red); border-color: var(--red); transform: translate(-50%, -50%) scale(1.04); }
+.film-frame:hover::after { background: radial-gradient(60% 60% at 50% 50%, rgba(0,0,0,0), rgba(0,0,0,0.3)); }
+.film-btn { gap: 8px; }
+.film-btn svg { width: 16px; height: 16px; }
+.film-modal { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.92); display: grid; place-items: center; padding: clamp(12px, 4vw, 56px); animation: fmIn .3s ease; }
+.film-modal[hidden] { display: none; }
+@keyframes fmIn { from { opacity: 0; } to { opacity: 1; } }
+.fm-box { position: relative; width: min(100%, calc((100vh - 112px) * 16 / 9)); aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: #000; box-shadow: 0 30px 120px rgba(0,0,0,0.6); }
+.fm-box video { width: 100%; height: 100%; display: block; }
+.fm-after { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 22px; background: rgba(0,0,0,0.72); text-align: center; }
+.fm-after[hidden] { display: none; }
+.fm-after p { font-family: var(--display); font-weight: 300; font-size: clamp(1.4rem, 3vw, 2.4rem); letter-spacing: -0.03em; }
+.fm-close { position: absolute; top: 16px; right: 16px; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); color: var(--white); cursor: pointer; display: grid; place-items: center; }
+.fm-close svg { width: 22px; height: 22px; }
+.fm-close:hover { background: rgba(255,255,255,0.18); }
+@media (max-width: 900px) { .film-head { grid-template-columns: minmax(0, 1fr); gap: 16px; } .film-frame { border-radius: 16px; } .film-play { padding: 12px 18px 12px 14px; font-size: 1rem; } }
+@media (prefers-reduced-motion: reduce) { .film-modal { animation: none; } }
+
 /* build */
 .build { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: end; }
 .build ul { list-style: none; padding: 0; margin: 26px 0 0; color: #C9C9C9; }
@@ -410,11 +438,23 @@ footer p { max-width: 40ch; }
       <p>Elah is building a personal AI that lives with you, not in a data center. Private by design. Yours from the first word.</p>
       <div class="actions">
         <a class="pill solid" href="#access">Get early access</a>
-        <a class="pill ghost" href="#quest">Try the puzzle</a>
+        <button class="pill ghost film-btn" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>Watch the film</button>
       </div>
     </div>
     <p class="hero-note">In stealth.<br>Arriving soon.</p>
   </header>
+
+  <section class="film-sec" aria-label="Meet Samantha">
+    <div class="film-head">
+      <h2>Meet Samantha.</h2>
+      <p class="lede">The AI that lives inside Node, in under a minute.</p>
+    </div>
+    <button class="film-frame" type="button" data-film aria-label="Play the film Meet Samantha, 57 seconds, with sound">
+      <video class="film-loop" src="film/samantha-loop.mp4" poster="film/samantha-loop-poster.jpg" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+      <span class="film-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg><span>Watch the film</span><small>0:57</small></span>
+    </button>
+    <p class="fine">Concept film. Interface prototype with scripted responses.</p>
+  </section>
 
   <section class="manifesto" aria-label="Why Elah">
     <p>Today, the smartest machines on earth live in someone else's building.</p>
@@ -512,7 +552,7 @@ footer p { max-width: 40ch; }
   <section class="section">
     <div class="node-head">
       <h2>Meet Node.</h2>
-      <p class="lede">Node is the device. Inside it lives an AI that knows your work, your voice and your ideas, and keeps them to itself.</p>
+      <div><p class="lede">Node is the device. Inside it lives an AI that knows your work, your voice and your ideas, and keeps them to itself.</p><div class="actions"><button class="pill film-btn" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>Watch the film, 0:57</button></div></div>
     </div>
     <div class="promises">
       <div class="promise"><h3>It's yours</h3><p>It runs on a device in your home or office. Your conversations, files and memories stay there.</p></div>
@@ -671,6 +711,17 @@ footer p { max-width: 40ch; }
   </section>
 </div>
 </main>
+
+<div class="film-modal" id="filmModal" hidden role="dialog" aria-modal="true" aria-label="Meet Samantha, concept film">
+  <div class="fm-box">
+    <video id="filmVideo" controls playsinline preload="none" poster="film/samantha-poster.jpg"></video>
+    <div class="fm-after" id="fmAfter" hidden>
+      <p>Want her on your desk?</p>
+      <div class="actions"><a class="pill solid" href="#access" data-close-film>Join early access</a><button class="pill ghost" type="button" id="fmReplay">Watch again</button></div>
+    </div>
+  </div>
+  <button class="fm-close" type="button" id="fmClose" aria-label="Close the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>
 
 <footer>
   <a class="brand" href="#home" aria-label="Back to home">
@@ -897,6 +948,47 @@ footer p { max-width: 40ch; }
     msg.innerHTML = 'Opening WhatsApp. Tap <b>Send</b> there to finish. <a href="' + url + '" target="_blank" rel="noopener">Open it again</a>';
     window.location.href = url;
   });
+})();
+
+/* ---------- Meet Samantha: silent loop on the home page + full film player ---------- */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const loop = document.querySelector('.film-loop');
+  // Play the silent loop only while it's on screen, and never for reduced-motion users.
+  if (loop && !reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) loop.play().catch(() => {}); else loop.pause(); });
+    }, { threshold: 0.25 }).observe(loop);
+  }
+  const modal = document.getElementById('filmModal'), video = document.getElementById('filmVideo');
+  const after = document.getElementById('fmAfter'), closeBtn = document.getElementById('fmClose');
+  let opener = null;
+  function pickSource() {
+    if (video.src) return;
+    const small = innerWidth <= 900 || (navigator.connection && navigator.connection.saveData);
+    video.src = small ? 'film/meet-samantha-720.mp4' : 'film/meet-samantha-1080.mp4';
+  }
+  function open(e) {
+    opener = e && e.currentTarget;
+    pickSource();
+    after.hidden = true; modal.hidden = false; document.body.style.overflow = 'hidden';
+    if (loop) loop.pause();
+    video.currentTime = 0; video.play().catch(() => {});
+    closeBtn.focus();
+  }
+  function close() {
+    video.pause(); modal.hidden = true; document.body.style.overflow = '';
+    if (opener) opener.focus();
+  }
+  document.querySelectorAll('[data-film]').forEach(b => b.addEventListener('click', open));
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) close(); });
+  video.addEventListener('ended', () => { after.hidden = false; });
+  video.addEventListener('play', () => { after.hidden = true; });
+  document.getElementById('fmReplay').addEventListener('click', () => { after.hidden = true; video.currentTime = 0; video.play().catch(() => {}); });
+  document.querySelectorAll('[data-close-film]').forEach(a => a.addEventListener('click', () => { video.pause(); modal.hidden = true; document.body.style.overflow = ''; }));
+  addEventListener('hashchange', () => { if (!modal.hidden) close(); });
 })();
 
 /* ---------- Tabs (routed on the URL hash so each tab can be linked) ---------- */

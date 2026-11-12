@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro';
+const schema = {
+  '@context': 'https://schema.org', '@type': 'JobPosting',
+  title: 'Founding System Architecture Engineer',
+  description: '<p>Own the architecture of Elah\'s hardware, from first prototype to production: decide what we build, buy and license, and turn early research into designs a factory can make. Skills: photonics, neuromorphic computing, AI/ML, chip or accelerator architecture. Remote, US company, founding equity.</p>',
+  datePosted: '2026-10-28', employmentType: 'FULL_TIME',
+  hiringOrganization: { '@type': 'Organization', name: 'Elah', sameAs: 'https://elah.one', logo: 'https://elah.one/icon-512.png' },
+  jobLocationType: 'TELECOMMUTE',
+  applicantLocationRequirements: { '@type': 'Country', name: 'United States' },
+};
+---
+<Layout title="Careers: Founding System Architecture Engineer | Elah" description="Elah is hiring a founding System Architecture Engineer: photonics, neuromorphic, AI/ML. Remote, US company, founding equity. Includes an optional hiring side quest." path="/careers" og="careers" current="careers" schema={schema}>
+  <section class="sec first" aria-labelledby="car-h">
+    <div class="wrap">
+      <div class="head-2">
+        <div class="stack">
+          <h1 class="h-xl" id="car-h" data-reveal>The next computer won't think like a computer.</h1>
+          <div class="badges"><span class="badge">Photonics</span><span class="badge">Neuromorphic</span><span class="badge">AI/ML</span></div>
+        </div>
+        <div class="stack">
+          <p class="lede">We're hiring a founding System Architecture Engineer to help build it. Small team. Giant problem.</p>
+          <ul class="facts"><li>Remote</li><li>US company</li><li>Founding role with equity</li></ul>
+          <div class="actions"><a class="btn btn-primary" href="#apply">Apply</a><a class="btn btn-ghost" href="#hiring">Take the side quest</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="The role">
+    <div class="wrap grid-2 roles">
+      <div>
+        <h3>What you'll do</h3>
+        <ul>
+          <li>Own the architecture of Elah's hardware, from first prototype to production</li>
+          <li>Decide what we build, what we buy, and what we license</li>
+          <li>Turn early research into designs a factory can make</li>
+          <li>Hire the team that comes after you</li>
+        </ul>
+      </div>
+      <div>
+        <h3>You might be right for this if</h3>
+        <ul>
+          <li>You've taken a chip, accelerator or embedded system from design to silicon</li>
+          <li>You care about energy per answer, not just speed</li>
+          <li>You'd rather build something new than tune something old</li>
+          <li>You looked at the side quest and wanted to trace it</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="how-h">
+    <div class="wrap">
+      <h2 class="h-l" id="how-h" data-reveal>How we work.</h2>
+      <div class="grid-3" style="margin-top:40px">
+        <div class="pain"><h3>Remote, async-first</h3><p>Write things down, decide in the open, and keep meetings short.</p></div>
+        <div class="pain"><h3>Small and senior</h3><p>Everyone owns a whole area. No layers between an idea and a decision.</p></div>
+        <div class="pain"><h3>Honest about results</h3><p>We set pass and fail criteria before we test, and drop what doesn't pass.</p></div>
+      </div>
+      <ol class="steps three" style="margin-top:56px" aria-label="How hiring works">
+        <li><b>Apply</b>Send a link to your work, or take the optional side quest.</li>
+        <li><b>Talk with us</b>A conversation about what you've built and how you think.</li>
+        <li><b>Work through a real problem</b>One of ours, together.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="hiring" aria-labelledby="sq-h">
+    <div class="wrap quest-grid">
+      <div class="stack">
+        <span class="level-tag">Hiring side quest</span>
+        <h2 class="h-l" id="sq-h" data-reveal>The next step.</h2>
+        <p class="lede">The network spells one word. Time is the value.</p>
+        <p class="body">Optional, for the people we want to build with. Just curious? Ask an AI to crack it and learn something fun. Know why the answer is right? Send us the word and the why.</p>
+        <form class="form" data-lead="quest-hiring" data-done="Got it. We read every answer." autocomplete="off" novalidate>
+          <div><label for="q-word">The word</label><input type="text" id="q-word" name="word" spellcheck="false" autocapitalize="characters" required data-need="the word"></div>
+          <div><label for="q-why">The why: how you read the network</label><textarea id="q-why" name="why" placeholder="Walk us through at least one output channel." required data-minlen="20" data-need="how you got it (that part matters more than the word)"></textarea></div>
+          <div class="row-2">
+            <div><label for="q-name">Your name</label><input type="text" id="q-name" name="name" autocomplete="name"></div>
+            <div><label for="q-email">Email</label><input type="email" id="q-email" name="email" autocomplete="email" required></div>
+          </div>
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="actions"><button class="btn btn-primary" type="submit">Send my answer</button></div>
+          <p class="msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <figure class="poster">
+        <a href="/quest-poster.png" target="_blank" rel="noopener" aria-label="Open the full-size puzzle">
+          <img src="/quest-poster-1200.png" width="1200" height="1500" loading="lazy" alt="Elah recruiting poster: a network of timed spiking nodes marked with first-arrival, last-arrival and second-arrival symbols, a hex string in the corner, and a stepped waveform in the side-quest card.">
+        </a>
+        <figcaption>Tap to open full size.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="apply" aria-labelledby="ap-h">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <h2 class="h-l" id="ap-h" data-reveal>Apply.</h2>
+        <p class="lede">No cover letter needed. Show us something you built.</p>
+      </div>
+      <form class="form panel-form" data-lead="careers-apply" data-done="Thanks. We'll reply either way." novalidate>
+        <div class="row-2">
+          <div><label for="a-name">Your name</label><input type="text" id="a-name" name="name" autocomplete="name" required data-need="your name"></div>
+          <div><label for="a-email">Email</label><input type="email" id="a-email" name="email" autocomplete="email" required></div>
+        </div>
+        <div><label for="a-link">Link to your work (LinkedIn, GitHub, papers, a portfolio)</label><input type="url" id="a-link" name="link" required data-need="a link to your work" placeholder="https://"></div>
+        <div><label for="a-note">One thing you built that you're proud of</label><textarea id="a-note" name="note"></textarea></div>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="actions"><button class="btn btn-primary" type="submit">Send application</button></div>
+        <p class="msg" role="status" aria-live="polite"></p>
+        <p class="fine">We'll only use this for hiring. <a href="/privacy">Privacy</a></p>
+      </form>
+    </div>
+  </section>
+</Layout>

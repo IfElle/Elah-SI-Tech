@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Private on-site AI for business | Elah" description="AI for the work you can't upload. Elah runs private, on-site AI pilots for teams with client documents, financial data or anything covered by an NDA." path="/business" og="business" current="business">
+  <section class="sec first" aria-labelledby="biz-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h1 class="h-xl" id="biz-h" data-reveal>AI for the work you can't upload.</h1>
+        <div class="stack">
+          <p class="lede">Your team could save hours with AI. But the documents that matter most can't leave the building. Node brings the AI to them instead.</p>
+          <div class="actions"><a class="btn btn-primary" href="#pilot">Request a pilot call</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="pain-h">
+    <div class="wrap">
+      <h2 class="h-l" id="pain-h" data-reveal>Sound familiar?</h2>
+      <div class="grid-3" style="margin-top:48px">
+        <div class="pain"><span class="num">01</span><h3>Client documents</h3><p>Passports, contracts and case files your policy says can't go into outside AI tools.</p></div>
+        <div class="pain"><span class="num">02</span><h3>Financial data</h3><p>Ledgers, statements and payroll you'd never paste into a chat window.</p></div>
+        <div class="pain"><span class="num">03</span><h3>Anything under NDA</h3><p>Designs, plans and code you've promised to keep inside the company.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="pilot-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h2 class="h-l" id="pilot-h" data-reveal>What a pilot looks like.</h2>
+        <p class="body">A focused trial with a small number of teams. Fixed scope, fixed period, no surprises.</p>
+      </div>
+      <ol class="steps">
+        <li><b>We talk</b>A short call to find one or two workflows worth trying.</li>
+        <li><b>We set it up</b>A device in your office, configured by us. Your data stays on it.</li>
+        <li><b>Your team uses it</b>For a fixed period, with us on hand to help.</li>
+        <li><b>We review together</b>What saved time, what didn't, and whether to keep going.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="uses-h">
+    <div class="wrap">
+      <h2 class="h-l" id="uses-h" data-reveal>Where teams start.</h2>
+      <div class="uses" style="margin-top:48px">
+        <div class="use"><small>Document checking</small><p>Compare forms against the source documents and flag what doesn't match.</p><span class="ask">Check these 186 scans against the forms.</span></div>
+        <div class="use"><small>Accounts questions</small><p>Ask plain questions of your own numbers and get answers with the working shown.</p><span class="ask">Will we make payroll this month?</span></div>
+        <div class="use"><small>Internal knowledge</small><p>One place to ask about your policies, past projects and how things are done.</p><span class="ask">What did we agree with this client last year?</span></div>
+      </div>
+      <p class="fine" style="margin-top:16px">Examples of what a pilot could cover. Each pilot is scoped with you.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="pilot" aria-labelledby="form-h">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <h2 class="h-l" id="form-h" data-reveal>Talk to us about a pilot.</h2>
+        <p class="lede">Tell us a little about your team. We'll reply to set up a short call.</p>
+      </div>
+      <form class="form panel-form" data-lead="business-pilot" data-done="Thanks. We'll email you to set up a call." novalidate>
+        <div class="row-2">
+          <div><label for="b-name">Your name</label><input type="text" id="b-name" name="name" autocomplete="name" required data-need="your name"></div>
+          <div><label for="b-email">Work email</label><input type="email" id="b-email" name="email" autocomplete="email" required></div>
+        </div>
+        <div class="row-2">
+          <div><label for="b-co">Company</label><input type="text" id="b-co" name="company" autocomplete="organization" required data-need="your company"></div>
+          <div><label for="b-size">Team size</label><select id="b-size" name="size"><option value="">Choose</option><option>1–10</option><option>11–50</option><option>51–200</option><option>200+</option></select></div>
+        </div>
+        <div><label for="b-need">What would you want it to do?</label><textarea id="b-need" name="need" placeholder="One or two tasks your team does every week."></textarea></div>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="actions"><button class="btn btn-primary" type="submit">Request a pilot call</button></div>
+        <p class="msg" role="status" aria-live="polite"></p>
+        <p class="fine">We'll only use this to reply to you. <a href="/privacy">Privacy</a></p>
+      </form>
+    </div>
+  </section>
+</Layout>

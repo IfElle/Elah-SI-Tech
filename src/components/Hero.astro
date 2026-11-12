@@ -1,0 +1,14 @@
+---
+import Capture from './Capture.astro';
+---
+<header class="hero" aria-label="Intelligence you can hold">
+  <canvas id="orb" aria-hidden="true"></canvas>
+  <div class="hero-copy">
+    <h1>Intelligence you can hold.</h1>
+    <p class="lede">A personal AI that lives on your desk. No usage limits. No meter. Yours.</p>
+    <div class="hero-form"><Capture id="hero" source="hero" /></div>
+    <div class="hero-alt"><button class="btn btn-ghost" type="button" data-film="hero"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg> Watch the film, 0:57</button></div>
+  </div>
+  <p class="hero-note">In development.<br>Early access is open.</p>
+</header>
+<script>import '../scripts/hero.js';</script>

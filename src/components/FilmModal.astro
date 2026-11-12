@@ -1,0 +1,16 @@
+---
+import Capture from './Capture.astro';
+---
+<div class="film-modal" id="filmModal" hidden role="dialog" aria-modal="true" aria-label="Meet Samantha, concept film">
+  <div class="fm-box">
+    <video id="filmVideo" controls playsinline preload="none" poster="/film/samantha-poster.jpg" crossorigin="anonymous">
+      <track kind="captions" src="/film/meet-samantha.vtt" srclang="en" label="English">
+    </video>
+    <div class="fm-after" id="fmAfter" hidden>
+      <p>Want her on your desk?</p>
+      <Capture id="film" source="film-end" />
+      <button class="btn-text" type="button" id="fmReplay">Watch again</button>
+    </div>
+  </div>
+  <button class="fm-close" type="button" id="fmClose" aria-label="Close the film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>

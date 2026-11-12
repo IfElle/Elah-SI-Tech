@@ -1,0 +1,40 @@
+---
+interface Props { id: string; source: string; cta?: string; }
+const { id, source, cta = 'Get early access' } = Astro.props;
+const roles = [
+  ['buyer', 'I want one'],
+  ['business', 'For my business'],
+  ['investor', 'Investor or press'],
+  ['builder', 'I build hardware or AI'],
+];
+---
+<div class="cap-wrap" data-capture>
+  <form class="capture" data-source={source} novalidate>
+    <label class="sr-only" for={`em-${id}`}>Email</label>
+    <input type="email" id={`em-${id}`} name="email" placeholder="Your email" autocomplete="email" required>
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button class="btn btn-primary" type="submit">{cta}</button>
+  </form>
+  <div class="capture-meta">
+    <p class="msg" role="status" aria-live="polite"></p>
+    <p class="fine">We'll only email you about Elah. <a href="/privacy">Privacy</a></p>
+  </div>
+  <form class="capture-2" hidden novalidate>
+    <p class="landed"><span class="stone" aria-hidden="true"></span><span data-landed>You're on the list.</span></p>
+    <fieldset>
+      <legend>Optional: what best describes you?</legend>
+      <div class="opts">
+        {roles.map(([v, l]) => <label><input type="radio" name="role" value={v}><span>{l}</span></label>)}
+      </div>
+    </fieldset>
+    <div>
+      <label for={`note-${id}`}>What would you hand her first? (optional)</label>
+      <input type="text" id={`note-${id}`} name="note" maxlength="300">
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost" type="submit">Send</button>
+      <button class="btn-text" type="button" data-skip>Skip</button>
+    </div>
+    <p class="msg" role="status" aria-live="polite"></p>
+  </form>
+</div>

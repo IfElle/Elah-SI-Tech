@@ -1,0 +1,14 @@
+---
+// Update monthly. Keep every line true.
+const items = [
+  ['Interface prototype', 'Working', 'on'],
+  ['Hardware prototype', 'In progress', 'wip'],
+  ['Our own AI silicon', 'In research', 'wip'],
+  ['First business pilot', 'In discussion', 'wip'],
+  ['Ship date', 'Not announced', 'next'],
+];
+---
+<div class="status" role="list" aria-label="Project status, November 2026">
+  {items.map(([k, v, s]) => <div role="listitem"><span>{k}</span><b><i class={`st-dot st-${s}`} aria-hidden="true"></i>{v}</b></div>)}
+</div>
+<p class="fine" style="margin-top:12px">Updated November 2026.</p>

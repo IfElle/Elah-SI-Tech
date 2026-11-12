@@ -1,0 +1,8 @@
+---
+const { from = 'section' } = Astro.props;
+---
+<button class="film-frame" type="button" data-film={from} aria-label="Play the film Meet Samantha, 57 seconds, with sound">
+  <video class="film-loop" src="/film/samantha-loop.mp4" poster="/film/samantha-loop-poster.jpg" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+  <span class="film-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg><span>Watch the film</span><small>0:57</small></span>
+</button>
+<p class="fine" style="margin-top:14px">Concept film. Interface prototype with scripted responses.</p>

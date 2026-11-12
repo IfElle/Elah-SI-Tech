@@ -1,0 +1,53 @@
+---
+import './day.css';
+---
+<div id="dayPin">
+  <section class="sec" id="day">
+  <div class="wrap day-inner">
+    <div class="day-head">
+      <h2 class="h-l" data-reveal>A day with Node.</h2>
+      <p class="lede">Six moments where cloud AI hits a wall, and Node keeps going.</p>
+    </div>
+    <div class="timeline" role="tablist" aria-label="Moments in the day">
+      <span class="tl-bar" id="tlBar"></span>
+    </div>
+    <div class="stage" id="stage">
+      <div class="panel cloud" aria-label="Cloud AI">
+        <div class="panel-top"><span>Cloud AI</span><span id="cloudTime"></span></div>
+        <p class="ask" id="cloudAsk"></p>
+        <div class="wall" role="status">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.6 18.4 18.4 5.6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <b id="wallTitle"></b>
+          <span id="wallText"></span>
+        </div>
+      </div>
+      <div class="panel node" aria-label="Node" aria-live="polite">
+        <div class="panel-top"><span class="speaking"><span class="pulse"></span>Node</span><span id="nodeBadge"></span></div>
+        <p class="ask" id="nodeAsk"></p>
+        <p class="reply rise" id="nodeReply"></p>
+        <div class="out" id="nodeOut"></div>
+      </div>
+    </div>
+    <div class="tally" aria-live="polite">
+      <p><span>Cloud AI walls hit</span><b id="tWalls">1</b></p>
+      <p><span>Done on Node</span><b id="tDone">1</b></p>
+      <p><span>Extra cost on Node</span><b>$0</b></p>
+      <p><span>Data sent out by Node</span><b>None</b></p>
+    </div>
+    <p class="fine">Scenes show what Node is being built to do.</p>
+    <p class="day-hint">Keep scrolling to move through the day. Scenes show what Node is being built to do.</p>
+    </div>
+  </section>
+</div>
+<style is:global>
+  #dayPin.pinned #day { position: sticky; top: 0; height: 100vh; display: flex; align-items: flex-start; padding: 92px 0 16px; border-top: 0; }
+  #dayPin.pinned .day-inner { width: 100%; }
+  #dayPin.pinned #day .timeline { margin-top: 2.5vh; }
+  #dayPin.pinned #day .day-head h2 { font-size: var(--fs-48); }
+  #dayPin.pinned #day .day-head .lede { font-size: var(--fs-18); }
+  #dayPin.pinned #day .panel { min-height: min(440px, calc(100vh - 360px)); }
+  #dayPin.pinned #day .fine { display: none; }
+  #day .day-hint { display: none; }
+  #dayPin.pinned #day .day-hint { display: none; }
+</style>
+<script>import '../scripts/day.js';</script>

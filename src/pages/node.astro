@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Shot from '../components/Shot.astro';
+import Capture from '../components/Capture.astro';
+const PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+const rows = [
+  ['talk', 'Talk.', 'Speak to her like a person. She answers out loud, follows the thread, and picks up where you left off yesterday.', 'Samantha introducing herself'],
+  ['week', 'Plan.', 'Ask for a plan and get a workspace: your week, your priorities, a budget you can adjust with a dial.', 'A week plan with a calendar and a priorities board'],
+  ['drafts', 'Create.', 'Three directions instead of one answer. Pick a favourite and she remembers your taste next time.', 'Three poster drafts to choose from'],
+  ['crew', 'Hand off.', 'A small crew of helpers handles the busywork in the background, and reports back when it is done.', 'Four helpers working around Samantha: inbox, research, design and code'],
+  ['code', 'Build.', 'Find the bug, fix it, run the tests. No meter running while she works.', 'A code task finished, with nothing spent on tokens'],
+];
+const faq = [
+  ['When does Node ship?', "We haven't announced a date. We'll tell the early-access list first, and we won't announce one until we're confident we can keep it."],
+  ['What will it cost?', "Pricing isn't announced yet. Node is a one-time hardware purchase, designed so you're not paying per word or per message."],
+  ['Does it need the internet?', "Node is designed to do its core work on the device, so it keeps working when your connection drops. Things that are online by nature, like web search, use the internet only when you choose."],
+  ['What happens to my data?', "It's designed to stay on the device in your home or office. Your conversations, files and memories aren't sent to us, and they don't train anyone else's model."],
+  ['Can I see what it knows about me?', 'Yes. Samantha keeps her memory on one screen. You can see each thing she knows, change it, delete it, or export it.'],
+  ['Will it replace my AI subscription?', "That's the goal for everyday work: writing, planning, research, images and code. We'll be honest about where it's ready and where it isn't. Early-access members will be the first to try it."],
+  ['Is the film real?', "It's a concept film made with our working interface prototype, with scripted responses so the story fits in a minute. Everything in it is something we're building."],
+];
+---
+<Layout title="Node: the personal AI that lives with you | Elah" description="Meet Samantha, the AI inside Node. She talks, plans, creates, codes and remembers, on a device you own, with no usage meter." path="/node" og="node" current="node">
+  <section class="sec first sam" aria-labelledby="sam-h">
+    <div class="wrap sam-grid">
+      <div class="stack">
+        <h1 class="h-xl" id="sam-h" data-reveal>Meet Samantha.</h1>
+        <p class="lede">Node is the device. Samantha is the AI who lives inside it: she knows your work, your voice and your ideas, and keeps them to herself.</p>
+        <div class="actions"><button class="btn btn-primary" type="button" data-film="node-hero"><Fragment set:html={PLAY} /> Watch the film, 0:57</button><a class="btn btn-ghost" href="/access">Get early access</a></div>
+      </div>
+      <div class="sam-orb" aria-hidden="true"><div class="ring"></div><div class="core"></div></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="does-h">
+    <div class="wrap">
+      <h2 class="h-l" id="does-h" data-reveal>What she does.</h2>
+      <div style="margin-top:48px">
+        {rows.map(([img, h, p, alt]) => (
+          <div class="cap-row">
+            <div class="cap-text"><h3>{h}</h3><p>{p}</p></div>
+            <Shot name={img} alt={alt} />
+          </div>
+        ))}
+      </div>
+      <p class="fine">Stills from our concept film, made with the interface prototype.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="mem-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h2 class="h-l" id="mem-h" data-reveal>Everything she knows, you can see.</h2>
+        <p class="lede">Her memory isn't hidden in a server log. It's a map on your screen. Open any fact, change it, or delete it, and she changes with it.</p>
+      </div>
+      <Shot name="memory" alt="Samantha's memory map, with facts arranged around her and one open for editing" />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="vs-h">
+    <div class="wrap">
+      <h2 class="h-l" id="vs-h" data-reveal>Not another subscription.</h2>
+      <div class="versus" role="table" aria-label="Cloud AI compared with Node" style="margin-top:48px">
+        <div class="vs-row head" role="row"><span role="columnheader"></span><span role="columnheader">Cloud AI</span><span role="columnheader"><span class="dot"></span>Node</span></div>
+        <div class="vs-row" role="row"><b role="rowheader">Where it lives</b><span role="cell">Someone else's data center</span><span role="cell">On your desk</span></div>
+        <div class="vs-row" role="row"><b role="rowheader">Your data</b><span role="cell">Sent away, under their policies</span><span role="cell">Stays on your device</span></div>
+        <div class="vs-row" role="row"><b role="rowheader">How you pay</b><span role="cell">Per word or per month, with limits</span><span role="cell">Once. No meter.</span></div>
+        <div class="vs-row" role="row"><b role="rowheader">Memory</b><span role="cell">Starts over, or remembers a little</span><span role="cell">Learns you, and shows you what it knows</span></div>
+        <div class="vs-row" role="row"><b role="rowheader">When the internet drops</b><span role="cell">It stops</span><span role="cell">It keeps working</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="real-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h2 class="h-l" id="real-h" data-reveal>What's real today.</h2>
+        <p class="body">We'd rather show you the line between what works and what's coming than blur it.</p>
+      </div>
+      <div class="real">
+        <div class="on">
+          <h3><i class="st-dot st-on" aria-hidden="true"></i>Working in our prototype</h3>
+          <ul>
+            <li>Conversation with Samantha, including voice</li>
+            <li>Workspaces: plans, budgets, comparisons, checklists</li>
+            <li>A memory you can see and edit</li>
+            <li>Helpers that work in the background</li>
+            <li>Coding help, from finding a bug to running tests</li>
+            <li>Image creation</li>
+            <li>A private mode that runs on local models</li>
+          </ul>
+        </div>
+        <div class="wip">
+          <h3><i class="st-dot st-wip" aria-hidden="true"></i>In development</h3>
+          <ul>
+            <li>The Node device itself</li>
+            <li>Learning from your day, overnight</li>
+            <li>Video and 3D creation</li>
+            <li>Our own AI chip</li>
+            <li>Business pilots on site</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="faq-h">
+    <div class="wrap">
+      <h2 class="h-l" id="faq-h" data-reveal>Questions.</h2>
+      <div class="faq" style="margin-top:40px">
+        {faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec closing" aria-labelledby="node-close">
+    <div class="wrap">
+      <h2 id="node-close" data-reveal>Want her on your desk?</h2>
+      <p class="lede">Join early access and you'll hear from us before anyone else.</p>
+      <div style="margin-top:32px"><Capture id="node" source="node-closing" /></div>
+    </div>
+  </section>
+</Layout>

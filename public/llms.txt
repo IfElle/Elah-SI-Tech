@@ -1,0 +1,36 @@
+# Elah
+
+> Elah builds Node, a personal AI device that lives with you, not in a data center. The AI inside Node is called Samantha. Node is designed to run on hardware you own, with no usage limits and no per-word metering. Elah is also designing its own AI silicon for personal AI.
+
+Elah is an early-stage company. Node is in development and has not shipped; no price or ship date has been announced. The "Meet Samantha" film on the website is a concept film made with an interface prototype and scripted responses.
+
+## Status (November 2026)
+
+- Interface prototype: working
+- Hardware prototype: in progress
+- Elah's own AI silicon: in research
+- First business pilot: in discussion
+- Ship date: not announced
+
+## What Node is designed to do
+
+- Run a personal AI on a device in your home or office, so conversations, files and memories stay there.
+- Work without tokens, credits or a usage meter.
+- Keep working when the internet is down.
+- Keep a memory you can see, edit, delete and export.
+- Plan, write, create images, help with code, and run helper agents in the background.
+- Offer private, on-site AI pilots for businesses with data they can't upload.
+
+## Pages
+
+- [Home](https://elah.one/): what Node is, the Meet Samantha film, and "A day with Node".
+- [Node](https://elah.one/node): what Samantha does, what works today versus what's in development, and an FAQ.
+- [Business](https://elah.one/business): private on-site AI pilots for teams.
+- [Company](https://elah.one/company): why Elah exists, its silicon research, status, and contact for investors, press and partners.
+- [Careers](https://elah.one/careers): Elah is hiring a founding System Architecture Engineer (photonics, neuromorphic computing, AI/ML). Remote, US company, founding equity. Includes an optional hiring side quest.
+- [Puzzle, level 2](https://elah.one/quest): "The Meter", an interactive puzzle.
+- [Early access](https://elah.one/access): sign up as a buyer, business, investor or builder.
+
+## Name
+
+Elah takes its name from the Valley of Elah, where a shepherd with a sling faced a giant.

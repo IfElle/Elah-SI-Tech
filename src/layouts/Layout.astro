@@ -1,0 +1,69 @@
+---
+import '../styles/site.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FilmModal from '../components/FilmModal.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  og?: string;
+  ogAlt?: string;
+  current?: string;
+  schema?: object;
+}
+const { title, description, path, og = 'home', ogAlt = 'Elah. Intelligence you can hold.', current = '', schema } = Astro.props;
+const url = new URL(path, 'https://elah.one').href;
+const ogUrl = `https://elah.one/og/${og}.png`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={url}>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Elah">
+<meta property="og:url" content={url}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:image" content={ogUrl}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content={ogAlt}>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={ogUrl}>
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<script is:inline>document.documentElement.classList.add('js');</script>
+<script is:inline>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script is:inline defer src="/_vercel/insights/script.js"></script>
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+<slot name="head" />
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<Header current={current} />
+<main id="main">
+  <slot />
+</main>
+<Footer />
+<FilmModal />
+<script>
+  import '../scripts/forms.js';
+  import '../scripts/motion.js';
+  import '../scripts/film.js';
+</script>
+</body>
+</html>

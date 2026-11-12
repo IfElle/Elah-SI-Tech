@@ -1,0 +1,36 @@
+---
+import Logo from './Logo.astro';
+import { WHATSAPP_NUMBER } from '../scripts/config.js';
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="/" aria-label="Elah home"><Logo /><span>elah</span></a>
+        <p>Elah takes its name from the valley where a shepherd with a sling faced a giant.</p>
+      </div>
+      <div>
+        <h3>Elah</h3>
+        <ul>
+          <li><a href="/node">Node</a></li>
+          <li><a href="/business">For business</a></li>
+          <li><a href="/company">Company</a></li>
+          <li><a href="/careers">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>More</h3>
+        <ul>
+          <li><a href="/access">Early access</a></li>
+          <li><a href="/quest">Puzzle, level 2</a></li>
+          <li><a href={`https://wa.me/${WHATSAPP_NUMBER}`} rel="noopener">WhatsApp us</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2026 Elah</span>
+      <span>Intelligence you can hold.</span>
+    </div>
+  </div>
+</footer>

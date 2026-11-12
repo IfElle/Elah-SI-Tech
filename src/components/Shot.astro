@@ -1,0 +1,4 @@
+---
+const { name, alt } = Astro.props;
+---
+<div class="shot"><picture><source srcset={`/img/${name}.webp`} type="image/webp"><img src={`/img/${name}.jpg`} alt={alt} width="1280" height="720" loading="lazy" decoding="async"></picture></div>

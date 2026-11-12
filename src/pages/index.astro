@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import FilmFrame from '../components/FilmFrame.astro';
+import Day from '../components/Day.astro';
+import Capture from '../components/Capture.astro';
+import Status from '../components/Status.astro';
+const arrow = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+---
+<Layout title="Elah: intelligence you can hold" description="Node is a personal AI that lives on your desk. No usage limits. No meter. Everything it learns about you stays with you. Watch the film and get early access." path="/" og="home" current="home">
+  <script is:inline slot="head">
+    // Old single-page links (elah.one/#node etc.) go to the new pages.
+    (function () {
+      var m = { '#node': '/node', '#quest': '/quest', '#careers': '/careers', '#access': '/access', '#hiringQuest': '/careers#hiring' };
+      if (m[location.hash]) location.replace(m[location.hash]);
+    })();
+  </script>
+
+  <Hero />
+
+  <section class="sec" style="border-top:0" aria-labelledby="film-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h2 class="h-l" id="film-h" data-reveal>Meet Samantha.</h2>
+        <p class="lede">The AI that lives inside Node. See her at work in under a minute.</p>
+      </div>
+      <FilmFrame from="home-section" />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="promise-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h2 class="h-l" id="promise-h" data-reveal>Yours. Not rented.</h2>
+        <p class="lede">Most AI lives in someone else's building and charges you by the word. Node lives with you.</p>
+      </div>
+      <div class="promises">
+        <article class="promise">
+          <div class="viz" data-meter aria-hidden="true">
+            <span class="meter-lbl">Words metered</span>
+            <span class="meter-num">1,208,940</span>
+            <span class="meter-stamp"><span class="dot"></span>Meter off</span>
+          </div>
+          <h3>No meter.</h3>
+          <p>No usage limits, no credits, no "try again in 3 hours". Use it all day.</p>
+        </article>
+        <article class="promise">
+          <div class="viz" data-chips aria-hidden="true">
+            <div class="chips">
+              <span class="chip c1">Works best before noon</span>
+              <span class="chip c2"><span class="t">Prefers long reports</span><i>edited</i></span>
+              <span class="chip c3">Old project: Atlas <span class="cursor-x">×</span></span>
+            </div>
+          </div>
+          <h3>Yours to see and change.</h3>
+          <p>Everything Samantha knows about you is on one screen. Edit it, delete it, or take it with you.</p>
+        </article>
+        <article class="promise">
+          <div class="viz" aria-hidden="true"><canvas class="room"></canvas></div>
+          <h3>Private by default.</h3>
+          <p>Your conversations, files and memories stay on the device in your room. Going online is your choice.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <Day />
+
+  <section class="sec" aria-labelledby="who-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h2 class="h-l" id="who-h" data-reveal>Built for how you work.</h2>
+        <p class="lede">Whether it's for you, your team, or your portfolio.</p>
+      </div>
+      <div class="who">
+        <a class="door" href="/node">
+          <div><small>For you</small><h3>Your own AI, at home.</h3><p>Plans, drafts, images, code and memory, without a meter.</p></div>
+          <span class="go">Meet Node <Fragment set:html={arrow} /></span>
+        </a>
+        <a class="door" href="/business">
+          <div><small>For your business</small><h3>AI for the work you can't upload.</h3><p>Private, on-site pilots for teams with sensitive data.</p></div>
+          <span class="go">Talk about a pilot <Fragment set:html={arrow} /></span>
+        </a>
+        <a class="door" href="/company">
+          <div><small>For investors and press</small><h3>Why we're building this.</h3><p>The problem, our approach, our own silicon, and where we are.</p></div>
+          <span class="go">About Elah <Fragment set:html={arrow} /></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="status-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h2 class="h-m" id="status-h" data-reveal>Where we are.</h2>
+        <p class="body">We'd rather tell you exactly where things stand than promise a date we can't keep.</p>
+      </div>
+      <Status />
+    </div>
+  </section>
+
+  <section class="sec closing" aria-labelledby="close-h">
+    <div class="wrap">
+      <h2 id="close-h" data-reveal>Be first to hold one.</h2>
+      <p class="lede">The first Nodes go to a small group. Leave your email and you'll hear from us before anyone else.</p>
+      <div style="margin-top:32px"><Capture id="close" source="home-closing" /></div>
+    </div>
+  </section>
+</Layout>

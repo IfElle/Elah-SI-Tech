@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { WHATSAPP_NUMBER } from '../scripts/config.js';
+const roles = [
+  ['buyer', 'Someone who wants one', 'Early access to Node'],
+  ['business', 'A business', 'A private, on-site pilot'],
+  ['investor', 'An investor or press', 'Talk to the team'],
+  ['builder', 'A builder', 'Hardware or AI, and the careers side quest'],
+];
+---
+<Layout title="Get early access to Node | Elah" description="The first Nodes go to a small group. Tell us who you are and you'll hear from us before anyone else." path="/access" og="home" current="access">
+  <section class="sec first" aria-labelledby="ac-h">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <h1 class="h-xl" id="ac-h" data-reveal>Be first.</h1>
+        <p class="lede">The first Nodes go to a small group. Tell us who you are and you'll hear from us before anyone else.</p>
+        <p class="body">Prefer to chat? <a href={`https://wa.me/${WHATSAPP_NUMBER}`} rel="noopener">Message us on WhatsApp</a>.</p>
+      </div>
+      <form class="form panel-form" data-lead="early-access" data-done="You're on the list. We'll be in touch." novalidate>
+        <fieldset>
+          <legend>I'm interested as</legend>
+          <div class="choices">
+            {roles.map(([v, b, s], i) => <label class="choice"><input type="radio" name="role" value={v} checked={i === 0}><span><b>{b}</b><small>{s}</small></span></label>)}
+          </div>
+        </fieldset>
+        <div class="row-2">
+          <div><label for="x-name">Name</label><input type="text" id="x-name" name="name" autocomplete="name" required data-need="your name"></div>
+          <div><label for="x-email">Email</label><input type="email" id="x-email" name="email" autocomplete="email" required></div>
+        </div>
+        <div><label for="x-note">What would you hand her first? (optional)</label><textarea id="x-note" name="note"></textarea></div>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="actions"><button class="btn btn-primary" type="submit">Join the list</button></div>
+        <p class="msg" role="status" aria-live="polite"></p>
+        <p class="fine">We'll only email you about Elah. Unsubscribe any time. <a href="/privacy">Privacy</a></p>
+      </form>
+    </div>
+  </section>
+</Layout>

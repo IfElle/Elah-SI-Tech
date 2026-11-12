@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Status from '../components/Status.astro';
+const schema = {
+  '@context': 'https://schema.org', '@type': 'Organization', name: 'Elah', url: 'https://elah.one',
+  logo: 'https://elah.one/icon-512.png',
+  description: 'Elah builds Node, a personal AI device that lives with you, and is designing its own AI silicon for personal AI.',
+};
+---
+<Layout title="About Elah: personal AI and the chips to run it" description="Why Elah exists, what we're building, our work on AI silicon, and where we are today. For investors, press and partners." path="/company" og="company" current="company" schema={schema}>
+  <section class="sec first" aria-labelledby="co-h">
+    <div class="wrap">
+      <div class="head-2">
+        <h1 class="h-xl" id="co-h" data-reveal>Small team. Giant problem.</h1>
+        <p class="lede">Elah is building personal AI people can own, and the chips to run it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="why-h">
+    <div class="wrap grid-2">
+      <h2 class="h-l" id="why-h" data-reveal>Why now.</h2>
+      <div class="stack body">
+        <p>AI has become the most useful tool most people have. And almost all of it is rented: usage limits, metered plans, memories that disappear, and models that can be changed or switched off overnight.</p>
+        <p>Meanwhile, hardware has caught up. A machine the size of a book can now run capable AI. What's missing is a product that anyone can use without becoming their own IT department.</p>
+        <p>That's the gap we're building for.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="what-h">
+    <div class="wrap grid-2">
+      <h2 class="h-l" id="what-h" data-reveal>What we're building.</h2>
+      <div class="stack body">
+        <p><b style="color:var(--white)">Node</b> is a personal AI device for your home or office. Inside it lives <b style="color:var(--white)">Samantha</b>, an assistant that talks, plans, creates, codes and remembers, with no usage meter, and with a memory you can see and change.</p>
+        <p>It's for people first, and for teams that work with data they can't send to the cloud.</p>
+        <div class="actions"><a class="btn btn-ghost" href="/node">Meet Node</a><a class="btn btn-ghost" href="/business">For business</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="chip-h">
+    <div class="wrap">
+      <div class="chip-line">
+        <div class="stack">
+          <h2 class="h-l" id="chip-h" data-reveal>Chips of the future.</h2>
+          <p class="body">Today's AI chips were designed for data centers. We're designing our own silicon for personal AI: fast enough for a whole day's work, efficient enough to sit quietly on a desk.</p>
+          <p class="body">It's long-term research, and it's why each generation of Node should get faster and more efficient than the last.</p>
+          <p><a class="btn-text" href="/careers">We're hiring a founding System Architecture Engineer</a></p>
+        </div>
+        <svg class="chip-art" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <radialGradient id="cg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#D7261E" stop-opacity=".35"/><stop offset="1" stop-color="#D7261E" stop-opacity="0"/></radialGradient>
+          </defs>
+          <circle cx="100" cy="100" r="96" fill="url(#cg)"/>
+          <g stroke="#3a3a3a" stroke-width="2" stroke-linecap="round">
+            {[60, 80, 100, 120, 140].map(x => <><line x1={x} y1="22" x2={x} y2="44"/><line x1={x} y1="156" x2={x} y2="178"/><line x1="22" y1={x} x2="44" y2={x}/><line x1="156" y1={x} x2="178" y2={x}/></>)}
+          </g>
+          <rect x="44" y="44" width="112" height="112" rx="14" fill="#0b0b0b" stroke="#4a4a4a" stroke-width="1.5"/>
+          <g class="die">
+            {[0,1,2,3].map(r => [0,1,2,3].map(c => <rect x={58 + c * 22} y={58 + r * 22} width="18" height="18" rx="3" fill="#151515" stroke="#2a2a2a" style={`--d:${(r * 4 + c) * 0.17}s`} />))}
+          </g>
+          <circle cx="100" cy="100" r="5" fill="#D7261E"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="where-h">
+    <div class="wrap">
+      <h2 class="h-l" id="where-h" data-reveal>Where we are.</h2>
+      <div style="margin-top:40px"><Status /></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="name-h">
+    <div class="wrap story">
+      <svg viewBox="-1.6 -1.4 3.4 2.8" aria-hidden="true"><path d="M-.95 0H.95A.95 .95 0 1 0 .52 .79" fill="none" stroke="#fff" stroke-width=".12" stroke-linecap="round"/><circle cx="1.1" cy=".4" r=".11" fill="#D7261E"/></svg>
+      <div class="stack">
+        <h2 class="h-l" id="name-h" data-reveal>The name.</h2>
+        <p class="body">Elah is the valley where a shepherd with a sling faced a giant. Our mark is a lowercase e whose stroke releases a single stone.</p>
+        <p class="body">The giants of AI are in data centers. We think the next big thing in AI fits in your hands.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="contact" aria-labelledby="contact-h">
+    <div class="wrap grid-2">
+      <div class="stack">
+        <h2 class="h-l" id="contact-h" data-reveal>Get in touch.</h2>
+        <p class="lede">For investors, press and partners. We read everything and reply to every serious note.</p>
+      </div>
+      <form class="form panel-form" data-lead="company-contact" data-done="Thanks. We'll be in touch soon." novalidate>
+        <div class="row-2">
+          <div><label for="c-name">Your name</label><input type="text" id="c-name" name="name" autocomplete="name" required data-need="your name"></div>
+          <div><label for="c-email">Email</label><input type="email" id="c-email" name="email" autocomplete="email" required></div>
+        </div>
+        <div class="row-2">
+          <div><label for="c-org">Fund, publication or company</label><input type="text" id="c-org" name="org" autocomplete="organization"></div>
+          <div><label for="c-topic">About</label><select id="c-topic" name="topic"><option>Investing</option><option>Press</option><option>Partnership</option><option>Something else</option></select></div>
+        </div>
+        <div><label for="c-msg">Message</label><textarea id="c-msg" name="message" required data-need="a short message"></textarea></div>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="actions"><button class="btn btn-primary" type="submit">Send</button></div>
+        <p class="msg" role="status" aria-live="polite"></p>
+        <p class="fine">We'll only use this to reply to you. <a href="/privacy">Privacy</a></p>
+      </form>
+    </div>
+  </section>
+</Layout>
+<style is:global>
+  .die rect { animation: die 3.4s ease-in-out infinite; animation-delay: var(--d); }
+  @keyframes die { 0%, 70%, 100% { fill: #151515; } 10% { fill: #5a1210; stroke: #D7261E; } 30% { fill: #151515; } }
+</style>

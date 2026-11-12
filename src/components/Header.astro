@@ -1,0 +1,30 @@
+---
+import Logo from './Logo.astro';
+const { current = '' } = Astro.props;
+const links = [
+  ['node', '/node', 'Node'],
+  ['business', '/business', 'Business'],
+  ['company', '/company', 'Company'],
+  ['careers', '/careers', 'Careers'],
+];
+const cur = (k: string) => (k === current ? 'page' : undefined);
+---
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="/" aria-label="Elah home"><Logo /><span>elah</span></a>
+  <nav class="nav" aria-label="Main">
+    {links.map(([k, href, label]) => <a href={href} aria-current={cur(k)}>{label}</a>)}
+    <a class="btn btn-primary" href="/access" aria-current={cur('access')}>Get early access</a>
+  </nav>
+  <button class="menu-btn" type="button" id="menuOpen" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+</header>
+<div class="menu" id="menu" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <button class="menu-btn menu-close" type="button" id="menuClose" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <a href="/" aria-current={cur('home')}>Home</a>
+  {links.map(([k, href, label]) => <a href={href} aria-current={cur(k)}>{label}</a>)}
+  <a href="/quest" aria-current={cur('quest')}>Puzzle</a>
+  <a class="btn btn-primary" href="/access">Get early access</a>
+</div>

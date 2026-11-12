@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Puzzle level 2: The Meter | Elah" description="Every word you send to the cloud is metered. This video is too. A puzzle from Elah. Use any AI you like. You will still need to think." path="/quest" og="quest" current="quest">
+  <section class="sec first" aria-labelledby="qq-h">
+    <div class="wrap quest-grid">
+      <div class="stack">
+        <span class="level-tag">Puzzle · Level 2</span>
+        <h1 class="h-xl" id="qq-h" data-reveal>The Meter.</h1>
+        <p class="lede">Every word you send to the cloud is metered. This video is too.</p>
+        <p class="body">Elah posts puzzles for people who like to look closer. Level 1 ran on our LinkedIn, and its answer still matters here.</p>
+        <ul class="clues">
+          <li>The dot isn't counting. It's talking.</li>
+          <li>The last word you found still matters.</li>
+          <li>Use any AI you like. You will still need to think.</li>
+        </ul>
+        <p class="body">The first person to crack it wins. Send us the word, and how you found it.</p>
+        <form class="form" data-lead="quest-meter" data-done="Got it. We read every answer." autocomplete="off" novalidate>
+          <div><label for="m-word">The word</label><input type="text" id="m-word" name="word" spellcheck="false" autocapitalize="characters" required data-need="the word"></div>
+          <div><label for="m-why">How you found it</label><textarea id="m-why" name="why" placeholder="What did you measure, and how did you read it?" required data-minlen="20" data-need="how you found it (that part matters more than the word)"></textarea></div>
+          <div class="row-2">
+            <div><label for="m-name">Your name or LinkedIn</label><input type="text" id="m-name" name="name"></div>
+            <div><label for="m-email">Email</label><input type="email" id="m-email" name="email" autocomplete="email" required></div>
+          </div>
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="actions"><button class="btn btn-primary" type="submit">Send my answer</button></div>
+          <p class="msg" role="status" aria-live="polite"></p>
+        </form>
+        <p class="fine">Building hardware or AI? There's a <a href="/careers#hiring">hiring side quest</a> too.</p>
+      </div>
+      <figure class="poster">
+        <video src="/level2-meter.mp4" poster="/level2-poster.jpg" controls playsinline muted loop preload="metadata" width="1080" height="1350" aria-label="The Meter: a counter labelled words metered ticks upward while a red dot blinks."></video>
+        <figcaption><a href="/level2-meter.mp4" download>Download the video</a> to study it frame by frame.</figcaption>
+      </figure>
+    </div>
+  </section>
+</Layout>
